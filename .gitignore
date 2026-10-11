@@ -49,3 +49,6 @@ ProjectOutputs/
 *.swp
 *.swo
 *~
+
+# Local staging directory for raw assets
+new/

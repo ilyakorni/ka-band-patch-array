@@ -74,6 +74,9 @@ Die Struktur des Repositories gliedert sich wie folgt:
 │       ├── array_8x8_final_model_ports.png    # 3D-Modell des finalen 8x8-Arrays mit 64 Toren in CST
 │       ├── array_8x8_final_vswr_ports.png     # VSWR-Verhalten an den Toren des finalen 8x8-Arrays
 │       ├── array_8x8_gain_polar_29ghz.png     # Gewinndiagramm des 8x8-Arrays (Gain = 21.3 dBi)
+│       ├── array_8x8_steered_axial_ratio_0deg.png # Achsenverhältnis bei Strahlschwenkung auf 0° (Zenit)
+│       ├── array_8x8_steered_axial_ratio_17deg.png # Achsenverhältnis bei Strahlschwenkung auf 17°
+│       ├── array_8x8_steered_axial_ratio_33deg.png # Achsenverhältnis bei Strahlschwenkung auf 33°
 │       ├── array_8x8_steered_beam_0deg.png    # E-Feld-Polardiagramm bei 0° Normalenabstrahlung
 │       ├── array_8x8_steered_beam_17deg.png   # E-Feld-Polardiagramm bei Strahlschwenkung auf 17°
 │       ├── array_8x8_steered_beam_33deg.png   # E-Feld-Polardiagramm bei Strahlschwenkung auf 33°
@@ -569,17 +572,20 @@ Zur Verifikation der Eignung für Phased-Array-Systeme (PAA) und aktiv elektroni
 Hauptstrahlrichtung $0^\circ$ (Zenit / Broadside):<br>
 Maximale elektrische Feldstärke: $E_{\text{max}} = 395$ V/m.<br>
 Halbwertsbreite: $\text{HPBW} = 9.4^\circ$.<br>
-Nebenzipfeldämpfung: $\text{SLL} = -5.8$ dB.
+Nebenzipfeldämpfung: $\text{SLL} = -5.8$ dB.<br>
+Achsenverhältnis (Axial Ratio): ausgeprägtes Minimum $\text{AR} \approx 1.6$ dB exakt in Hauptstrahlrichtung ($\theta = 0^\circ$).
 
 Hauptstrahl geschwenkt auf $17^\circ$:<br>
 Maximale elektrische Feldstärke: $E_{\text{max}} = 391$ V/m.<br>
 Halbwertsbreite: $\text{HPBW} = 9.9^\circ$.<br>
-Nebenzipfeldämpfung: $\text{SLL} = -5.5$ dB.
+Nebenzipfeldämpfung: $\text{SLL} = -5.5$ dB.<br>
+Achsenverhältnis (Axial Ratio): der Bereich hoher Zirkularpolarisationsreinheit ($\text{AR} < 3.0$ dB) schwenkt synchron mit der Hauptkeule mit und bewahrt ein minimales Achsenverhältnis bei $\theta = 17^\circ$.
 
 Hauptstrahl geschwenkt auf $33^\circ$:<br>
 Maximale elektrische Feldstärke: $E_{\text{max}} = 325$ V/m.<br>
 Halbwertsbreite: $\text{HPBW} = 11.7^\circ$.<br>
-Nebenzipfeldämpfung: $\text{SLL} = -6.5$ dB.
+Nebenzipfeldämpfung: $\text{SLL} = -6.5$ dB.<br>
+Achsenverhältnis (Axial Ratio): selbst bei weiten Schwenkwinkeln bis $33^\circ$ folgt das Minimum des Achsenverhältnisses ($\text{AR} < 3.0$ dB) präzise dem Strahlungsmaximum und gewährleistet stabile Zirkularpolarisation über den gesamten Scanbereich.
 
 <p align="center">
   <img src="docs/images/array_8x8_steered_beam_0deg.png" width="650" alt="E-Feld-Richtdiagramm bei 0 Grad Schwenkwinkel">
@@ -600,21 +606,39 @@ Nebenzipfeldämpfung: $\text{SLL} = -6.5$ dB.
 </p>
 
 <p align="center">
+  <img src="docs/images/array_8x8_steered_axial_ratio_0deg.png" width="650" alt="Achsenverhältnis bei Strahlschwenkung auf 0 Grad">
+  <br>
+  <em>Abb. 44. Polardiagramm des Achsenverhältnisses (AR) bei 0° Normalenabstrahlung: AR-Minimum fluchtet mit der Hauptkeule.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_axial_ratio_17deg.png" width="650" alt="Achsenverhältnis bei Strahlschwenkung auf 17 Grad">
+  <br>
+  <em>Abb. 45. Polardiagramm des Achsenverhältnisses (AR) bei Strahlschwenkung auf 17°: AR-Minimum (< 3.0 dB) folgt dem Schwenkwinkel.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_axial_ratio_33deg.png" width="650" alt="Achsenverhältnis bei Strahlschwenkung auf 33 Grad">
+  <br>
+  <em>Abb. 46. Polardiagramm des Achsenverhältnisses (AR) bei Strahlschwenkung auf 33°: Erhalt der Zirkularpolarisation (< 3.0 dB) bei weitem Schwenkwinkel.</em>
+</p>
+
+<p align="center">
   <img src="docs/images/array_8x8_3d_steered_beam_0deg.png" width="700" alt="3D-Strahlschwenkung bei 0 Grad">
   <br>
-  <em>Abb. 44. Räumliches 3D-Strahlungsdiagramm bei 0° Normalenrichtung.</em>
+  <em>Abb. 47. Räumliches 3D-Strahlungsdiagramm bei 0° Normalenrichtung.</em>
 </p>
 
 <p align="center">
   <img src="docs/images/array_8x8_3d_steered_beam_17deg.png" width="700" alt="3D-Strahlschwenkung bei 17 Grad">
   <br>
-  <em>Abb. 45. Räumliches 3D-Strahlungsdiagramm elektronisch geschwenkt auf 17°.</em>
+  <em>Abb. 48. Räumliches 3D-Strahlungsdiagramm elektronisch geschwenkt auf 17°.</em>
 </p>
 
 <p align="center">
   <img src="docs/images/array_8x8_3d_steered_beam_33deg.png" width="700" alt="3D-Strahlschwenkung bei 33 Grad">
   <br>
-  <em>Abb. 46. Räumliches 3D-Strahlungsdiagramm elektronisch geschwenkt auf 33°.</em>
+  <em>Abb. 49. Räumliches 3D-Strahlungsdiagramm elektronisch geschwenkt auf 33°.</em>
 </p>
 
 ## Lizenz

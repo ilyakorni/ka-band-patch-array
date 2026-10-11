@@ -74,6 +74,9 @@ The project files are organized as follows:
 │       ├── array_8x8_final_model_ports.png    # 3D model of final 8x8 array with 64 ports in CST
 │       ├── array_8x8_final_vswr_ports.png     # VSWR characteristics across ports of final 8x8 array
 │       ├── array_8x8_gain_polar_29ghz.png     # Polar Gain cut of 8x8 array at 29 GHz (Gain = 21.3 dBi)
+│       ├── array_8x8_steered_axial_ratio_0deg.png # Axial Ratio polar cut steered to boresight (0°)
+│       ├── array_8x8_steered_axial_ratio_17deg.png # Axial Ratio polar cut steered to 17°
+│       ├── array_8x8_steered_axial_ratio_33deg.png # Axial Ratio polar cut steered to 33°
 │       ├── array_8x8_steered_beam_0deg.png    # Polar E-field pattern steered to boresight (0°)
 │       ├── array_8x8_steered_beam_17deg.png   # Polar E-field pattern steered to 17°
 │       ├── array_8x8_steered_beam_33deg.png   # Polar E-field pattern steered to 33°
@@ -569,17 +572,20 @@ To evaluate compatibility with phased array antennas (PAA) and active electronic
 Beam steered to $0^\circ$ (boresight normal):<br>
 Maximum electric field: $E_{\text{max}} = 395$ V/m.<br>
 Half-Power Beamwidth: $\text{HPBW} = 9.4^\circ$.<br>
-Side Lobe Level: $\text{SLL} = -5.8$ dB.
+Side Lobe Level: $\text{SLL} = -5.8$ dB.<br>
+Axial Ratio: deep minimum $\text{AR} \approx 1.6$ dB oriented strictly along the main beam axis ($\theta = 0^\circ$).
 
 Beam steered to $17^\circ$:<br>
 Maximum electric field: $E_{\text{max}} = 391$ V/m.<br>
 Half-Power Beamwidth: $\text{HPBW} = 9.9^\circ$.<br>
-Side Lobe Level: $\text{SLL} = -5.5$ dB.
+Side Lobe Level: $\text{SLL} = -5.5$ dB.<br>
+Axial Ratio: the high-purity circular polarization sector ($\text{AR} < 3.0$ dB) steers synchronously with the beam, maintaining minimum axial ratio at $\theta = 17^\circ$.
 
 Beam steered to $33^\circ$:<br>
 Maximum electric field: $E_{\text{max}} = 325$ V/m.<br>
 Half-Power Beamwidth: $\text{HPBW} = 11.7^\circ$.<br>
-Side Lobe Level: $\text{SLL} = -6.5$ dB.
+Side Lobe Level: $\text{SLL} = -6.5$ dB.<br>
+Axial Ratio: even under wide-angle steering to $33^\circ$, the axial ratio minimum ($\text{AR} < 3.0$ dB) accurately tracks the steered main lobe peak, ensuring robust circular polarization performance across the full scan sector.
 
 <p align="center">
   <img src="docs/images/array_8x8_steered_beam_0deg.png" width="650" alt="E-Field Pattern Steered to 0 Degrees">
@@ -600,21 +606,39 @@ Side Lobe Level: $\text{SLL} = -6.5$ dB.
 </p>
 
 <p align="center">
+  <img src="docs/images/array_8x8_steered_axial_ratio_0deg.png" width="650" alt="Axial Ratio with Beam Steered to 0 Degrees">
+  <br>
+  <em>Figure 44. Polar Axial Ratio cut with beam steered to boresight (0°): AR notch aligned with main lobe.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_axial_ratio_17deg.png" width="650" alt="Axial Ratio with Beam Steered to 17 Degrees">
+  <br>
+  <em>Figure 45. Polar Axial Ratio cut with beam steered to 17°: AR minimum (< 3.0 dB) tracks the scan angle.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_axial_ratio_33deg.png" width="650" alt="Axial Ratio with Beam Steered to 33 Degrees">
+  <br>
+  <em>Figure 46. Polar Axial Ratio cut with beam steered to 33°: preservation of circular polarization (< 3.0 dB) under wide-angle steering.</em>
+</p>
+
+<p align="center">
   <img src="docs/images/array_8x8_3d_steered_beam_0deg.png" width="700" alt="3D Steered Beam at 0 Degrees">
   <br>
-  <em>Figure 44. 3D spatial beam steered to boresight normal (0°).</em>
+  <em>Figure 47. 3D spatial beam steered to boresight normal (0°).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/array_8x8_3d_steered_beam_17deg.png" width="700" alt="3D Steered Beam at 17 Degrees">
   <br>
-  <em>Figure 45. 3D spatial beam electronically steered to 17°.</em>
+  <em>Figure 48. 3D spatial beam electronically steered to 17°.</em>
 </p>
 
 <p align="center">
   <img src="docs/images/array_8x8_3d_steered_beam_33deg.png" width="700" alt="3D Steered Beam at 33 Degrees">
   <br>
-  <em>Figure 46. 3D spatial beam electronically steered to 33°.</em>
+  <em>Figure 49. 3D spatial beam electronically steered to 33°.</em>
 </p>
 
 ## License
