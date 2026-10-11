@@ -14,6 +14,7 @@ This repository contains the design, analytical synthesis, CAD assets, and full-
 [3D Modeling and Single-Element Optimization](#3d-modeling-and-single-element-optimization)<br>
 [Numerical Simulation Results for Single Element](#numerical-simulation-results-for-single-element)<br>
 [8x8 Antenna Array Investigation and Surface Wave Effects](#8x8-antenna-array-investigation-and-surface-wave-effects)<br>
+[Surface Wave Suppression via Ground Plane Perforations and Element Retuning](#surface-wave-suppression-via-ground-plane-perforations-and-element-retuning)<br>
 [License](#license)
 
 ## Overview
@@ -26,7 +27,8 @@ Topology: Multilayer stacked microstrip patch antenna with parasitic resonance.<
 Excitation: Non-contact aperture electromagnetic coupling through a cross-slot in the ground plane fed by a microstrip line.<br>
 Impedance Matching: Centered open-circuited quarter-wave ($\lambda_g/4$) tuning stub positioned directly over the aperture cross to compensate for slot reactance.<br>
 Circular Polarization: Corner-truncated square patch geometry ($45^\circ$ chamfers) on radiating elements generating degenerate orthogonal modes ($TM_{10}$ and $TM_{01}$) in quadrature ($90^\circ$ phase shift).<br>
-Bandwidth Expansion: Upper parasitic radiating patch coupled electromagnetically to the driven patch, providing a dual-resonance frequency response over the 28.0–30.0 GHz band.
+Bandwidth Expansion: Upper parasitic radiating patch coupled electromagnetically to the driven patch, providing a dual-resonance frequency response over the 28.0–30.0 GHz band.<br>
+Surface Wave Mitigation: Ground plane perforations encircling radiators to generate discontinuities that reflect substrate surface waves and mitigate inter-element mutual coupling.
 
 ## Project Structure
 
@@ -58,13 +60,22 @@ The project files are organized as follows:
 │       ├── array_8x8_vswr_ports.png           # Multi-port VSWR characteristics of 8x8 array
 │       ├── axial_ratio_3d_pattern_29ghz.png   # 3D Farfield Axial Ratio radiation pattern of single element
 │       ├── axial_ratio_polar_29ghz.png        # 2D polar Axial Ratio radiation cut of single element (29 GHz)
-│       ├── parasitic_patch_geometry.png       # Geometry of upper stacked parasitic patch
-│       ├── patch_truncation_geometry.png      # Geometry of lower driven patch and corner truncations
-│       ├── simulation_s11_band_edge_lower.png # Lower -10 dB return loss band edge (27.94 GHz)
-│       ├── simulation_s11_band_edge_upper.png # Upper -10 dB return loss band edge (29.58 GHz)
-│       ├── simulation_s_parameters_s11.png    # Reflection coefficient S11 frequency response
-│       ├── simulation_vswr.png                # Voltage Standing Wave Ratio (VSWR) plot
-│       └── simulation_z_parameters.png        # Input impedance Z11 (Real/Imaginary) plot
+│       ├── cross_slot_aperture_dimensions.png # Dimensions of coupling cross-slot aperture (1.693 mm x 0.101 mm)
+│       ├── ground_holes_diagonal_spacing.png  # Diagonal spacing to ground plane holes (1.738 mm)
+│       ├── ground_holes_lateral_spacing.png   # Lateral spacing to ground plane holes (1.94 mm)
+│       ├── parasitic_patch_geometry.png       # Initial upper parasitic patch dimensions (2.01 mm)
+│       ├── patch_truncation_geometry.png      # Initial lower driven patch dimensions (2.65 mm)
+│       ├── retuned_axial_ratio_polar_29ghz.png # Retuned Axial Ratio polar cut (2.8 dB at 29 GHz)
+│       ├── retuned_driven_patch_with_ground_holes.png # Retuned driven patch dimensions (2.668 mm)
+│       ├── retuned_parasitic_patch_geometry.png # Retuned parasitic patch dimensions (2.50 mm)
+│       ├── retuned_s11_band_edge_lower.png    # Retuned lower return loss band edge (27.927 GHz)
+│       ├── retuned_s11_band_edge_upper.png    # Retuned upper return loss band edge (29.711 GHz)
+│       ├── retuned_vswr.png                   # Retuned VSWR response (1.30 at 29.0 GHz)
+│       ├── simulation_s11_band_edge_lower.png # Initial lower -10 dB return loss band edge (27.94 GHz)
+│       ├── simulation_s11_band_edge_upper.png # Initial upper -10 dB return loss band edge (29.58 GHz)
+│       ├── simulation_s_parameters_s11.png    # Initial reflection coefficient S11 frequency response
+│       ├── simulation_vswr.png                # Initial VSWR plot of single element
+│       └── simulation_z_parameters.png        # Initial input impedance Z11 plot
 └── simulation/
     └── cp_stacked_patch_antenna_29ghz.cst     # Full-wave 3D electromagnetic model (CST Studio Suite)
 ```
@@ -98,7 +109,7 @@ Quarter-wave open stub: stub length $L_t = \lambda_g / 4 \approx 1.83$ mm, guide
 <p align="center">
   <img src="docs/images/patch_truncation_geometry.png" width="500" alt="Resonator and Truncation Geometry">
   <br>
-  <em>Figure 1. Layout of the lower square patch radiator: patch width 2.65 mm, corner truncation size 0.35 mm.</em>
+  <em>Figure 1. Layout of the initial lower square patch radiator: patch width 2.65 mm, corner truncation size 0.35 mm.</em>
 </p>
 
 ## 3D Modeling and Single-Element Optimization
@@ -124,7 +135,7 @@ The coupled multi-resonant system expands the impedance bandwidth ($S_{11} < -10
 <p align="center">
   <img src="docs/images/parasitic_patch_geometry.png" width="500" alt="Upper Parasitic Resonator Geometry">
   <br>
-  <em>Figure 2. Layout of the upper parasitic radiator: patch width 2.01 mm, corner truncation 0.29 mm, dielectric spacing 0.203 mm.</em>
+  <em>Figure 2. Layout of the initial upper parasitic radiator: patch width 2.01 mm, corner truncation 0.29 mm, dielectric spacing 0.203 mm.</em>
 </p>
 
 <p align="center">
@@ -140,11 +151,11 @@ Across the broadband range of 28.0–30.0 GHz, the antenna maintains strong retu
 At 29.0 GHz, the return loss evaluates to $S_{11} = -13.24$ dB.<br>
 Resonance minima reach $-21.5$ to $-28.0$ dB across the band.
 
-Impedance matching bandwidth limits evaluated at the standard $S_{11} \le -10$ dB threshold:
+Initial impedance matching bandwidth limits evaluated at the standard $S_{11} \le -10$ dB threshold:
 
 Lower frequency edge: $f_{\text{low}} = 27.938$ GHz at $S_{11} = -10.28$ dB.<br>
 Upper frequency edge: $f_{\text{high}} = 29.576$ GHz at $S_{11} = -10.58$ dB.<br>
-Operational -10 dB bandwidth: $\Delta f = 1.638$ GHz (27.94–29.58 GHz band), fully covering the targeted Ka-band channel allocation.
+Operational -10 dB bandwidth: $\Delta f = 1.638$ GHz (27.94–29.58 GHz band).
 
 <p align="center">
   <img src="docs/images/simulation_s_parameters_s11.png" width="700" alt="S-Parameters S11 Wideband">
@@ -264,7 +275,95 @@ At 30.0 GHz, the broadside axial ratio remains at 2.6 dB only within an extremel
   <em>Figure 16. Polar Axial Ratio cut of the 8x8 array at 30 GHz.</em>
 </p>
 
-These findings illustrate that suppressing dielectric surface waves (e.g., through electromagnetic bandgap / EBG structures, substrate decoupling slots, or segmented dielectric islands) is mandatory for maintaining high-purity circular polarization in large-scale mmWave planar arrays.
+## Surface Wave Suppression via Ground Plane Perforations and Element Retuning
+
+To attenuate parasitic mutual coupling between adjacent radiating elements, artificial electromagnetic discontinuities were implemented by perforating the ground plane surrounding each radiating unit. The ground plane holes form an electromagnetic barrier that scatters and reflects guided substrate surface waves.
+
+Because the introduction of ground plane perforations altered the local electromagnetic boundary conditions and slot reactive admittance, a systematic retuning of the antenna radiators and feed stub was performed.
+
+### 1. Topology of Ground Plane Perforations and Aperture Geometry
+The defensive perforation ring is dimensioned as follows:
+
+Lateral distance from element center to lateral hole fence: 1.94 mm.<br>
+Diagonal distance from element center to corner holes: 1.738 mm.<br>
+Coupling cross-slot arm length: 1.693 mm.<br>
+Coupling cross-slot width: 0.101 mm.
+
+<p align="center">
+  <img src="docs/images/cross_slot_aperture_dimensions.png" width="450" alt="Cross-Slot Aperture Dimensions">
+  <br>
+  <em>Figure 17. Coupling cross-slot dimensions: arm length 1.693 mm, slot width 0.101 mm within the perforation ring.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/ground_holes_lateral_spacing.png" width="450" alt="Lateral Spacing to Ground Holes">
+  <br>
+  <em>Figure 18. Lateral distance from radiator center to ground perforation fence: 1.94 mm.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/ground_holes_diagonal_spacing.png" width="450" alt="Diagonal Spacing to Ground Holes">
+  <br>
+  <em>Figure 19. Diagonal distance from radiator center to corner ground holes: 1.738 mm.</em>
+</p>
+
+### 2. Resonator Retuning and Stub Shortening
+To compensate for reactive loading shifts caused by the perforated ground structure, the quarter-wave tuning stub was slightly shortened. The patch radiator dimensions were readjusted:
+
+Lower driven square patch dimension increased to 2.668 mm $\times$ 2.668 mm.<br>
+Diagonal corner truncations on the lower patch adjusted to $\Delta c = 0.373$ mm.<br>
+Upper parasitic square patch dimension enlarged to 2.50 mm $\times$ 2.50 mm.
+
+<p align="center">
+  <img src="docs/images/retuned_driven_patch_with_ground_holes.png" width="500" alt="Retuned Lower Driven Patch Layout">
+  <br>
+  <em>Figure 20. Retuned driven radiator layout: patch side 2.668 mm, corner truncation 0.373 mm.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_parasitic_patch_geometry.png" width="500" alt="Retuned Upper Parasitic Patch Layout">
+  <br>
+  <em>Figure 21. Retuned upper parasitic radiator layout: patch side 2.50 mm.</em>
+</p>
+
+### 3. Simulation Results After Retuning
+
+Reflection Coefficient ($S_{11}$) and Operational Bandwidth:
+Lower -10 dB return loss band edge: $f_{\text{low}} = 27.927$ GHz ($S_{11} = -10.06$ dB).<br>
+Upper -10 dB return loss band edge: $f_{\text{high}} = 29.711$ GHz ($S_{11} = -10.06$ dB).<br>
+Total -10 dB operational bandwidth expanded to $\Delta f = 1.784$ GHz (27.93–29.71 GHz band).
+
+Voltage Standing Wave Ratio (VSWR):
+At the center frequency of 29.0 GHz, VSWR improved to 1.30 (compared to 1.56 in the initial design).<br>
+A resonance minimum of 1.05 occurs near 28.7 GHz, delivering superior impedance matching to 50 $\Omega$.
+
+Restoration of Circular Polarization (Axial Ratio):
+At 29.0 GHz, the broadside axial ratio ($\theta = 0^\circ$) recovered to 2.8 dB.<br>
+The axial ratio value successfully returned below the 3.0 dB threshold across a broad angular beamwidth, confirming effective suppression of substrate surface waves and restoration of circular polarization.
+
+<p align="center">
+  <img src="docs/images/retuned_s11_band_edge_lower.png" width="700" alt="Retuned S11 Lower Band Edge">
+  <br>
+  <em>Figure 22. Retuned lower matching band edge at S11 = -10 dB (marker 27.927 GHz, -10.06 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_s11_band_edge_upper.png" width="700" alt="Retuned S11 Upper Band Edge">
+  <br>
+  <em>Figure 23. Retuned upper matching band edge at S11 = -10 dB (marker 29.711 GHz, -10.06 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_vswr.png" width="700" alt="Retuned VSWR Frequency Response">
+  <br>
+  <em>Figure 24. Simulated VSWR response after element retuning (VSWR = 1.30 at 29.0 GHz).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_axial_ratio_polar_29ghz.png" width="650" alt="Retuned Axial Ratio at 29 GHz">
+  <br>
+  <em>Figure 25. Farfield Axial Ratio polar cut at 29 GHz: successful restoration to 2.8 dB (< 3.0 dB).</em>
+</p>
 
 ## License
 

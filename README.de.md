@@ -14,6 +14,7 @@ Dieses Repository dokumentiert die Auslegung, die analytische Berechnung, CAD-Mo
 [3D-Modellierung und Optimierung des Einzelstrahlers](#3d-modellierung-und-optimierung-des-einzelstrahlers)<br>
 [Ergebnisse der elektromagnetischen Simulation des Einzelstrahlers](#ergebnisse-der-elektromagnetischen-simulation-des-einzelstrahlers)<br>
 [Untersuchung des 8x8-Antennenarrays und Oberflächenwelleneffekte](#untersuchung-des-8x8-antennenarrays-und-oberflächenwelleneffekte)<br>
+[Unterdrückung von Oberflächenwellen durch Masseflächen-Perforation und Neujustierung des Strahlers](#unterdrückung-von-oberflächenwellen-durch-masseflächen-perforation-und-neujustierung-des-strahlers)<br>
 [Lizenz](#lizenz)
 
 ## Projektübersicht
@@ -26,7 +27,8 @@ Topologie: Mehrlagige gestapelte Mikrostreifen-Patchantenne (Stacked Patch).<br>
 Anregungsmechanismus: Berührungslose elektromagnetische Aperturkopplung über einen kreuzförmigen Schlitz (Cross-Slot) in der Massefläche, gespeist durch eine Mikrostreifenleitung.<br>
 Anpassung: Zentrierte leerlaufende Lambda/Viertel-Anpassungsleitung ($\lambda_g/4$ Tuning Stub), platziert unmittelbar über dem Aperturkreuz zur Kompensation der Schlitzreaktanz.<br>
 Zirkulare Polarisation: Diagonale Eckenabschrägungen (Corner Truncation, $45^\circ$) auf den Resonatorelementen zur Anregung zweier orthogonaler Moden ($TM_{10}$ und $TM_{01}$) in Quadratur ($90^\circ$ Phasenverschiebung).<br>
-Bandbreitenvergrößerung: Ein über dem Hauptstrahler angeordneter parasitärer Resonator zur Erzeugung eines doppelresonanten Frequenzverhaltens im Bereich 28.0–30.0 GHz.
+Bandbreitenvergrößerung: Ein über dem Hauptstrahler angeordneter parasitärer Resonator zur Erzeugung eines doppelresonanten Frequenzverhaltens im Bereich 28.0–30.0 GHz.<br>
+Unterdrückung von Oberflächenwellen: Perforationen (Bohrungen) in der Massefläche um jeden Strahler zur Reflexion dielektrischer Oberflächenwellen und Minimierung der gegenseitigen Verkopplung.
 
 ## Projektstruktur
 
@@ -58,10 +60,19 @@ Die Struktur des Repositories gliedert sich wie folgt:
 │       ├── array_8x8_vswr_ports.png           # Stehwellenverhältnis an den Ports des 8x8-Arrays
 │       ├── axial_ratio_3d_pattern_29ghz.png   # 3D-Diagramm des Achsenverhältnisses des Einzelstrahlers
 │       ├── axial_ratio_polar_29ghz.png        # Polardiagramm des Achsenverhältnisses des Einzelstrahlers
-│       ├── parasitic_patch_geometry.png       # Geometrische Abmessungen des oberen parasitären Resonators
-│       ├── patch_truncation_geometry.png      # Geometrische Abmessungen des unteren Resonators und Abschrägungen
-│       ├── simulation_s11_band_edge_lower.png # Untere Grenzfrequenz für S11 = -10 dB (27.94 GHz)
-│       ├── simulation_s11_band_edge_upper.png # Obere Grenzfrequenz für S11 = -10 dB (29.58 GHz)
+│       ├── cross_slot_aperture_dimensions.png # Abmessungen der Kreuzschlitzapertur (1.693 mm x 0.101 mm)
+│       ├── ground_holes_diagonal_spacing.png  # Diagonaler Abstand zu den Masseleiter-Löchern (1.738 mm)
+│       ├── ground_holes_lateral_spacing.png   # Lateraler Abstand zu den Masseleiter-Löchern (1.94 mm)
+│       ├── parasitic_patch_geometry.png       # Ursprüngliche Geometrie des oberen parasitären Patches (2.01 mm)
+│       ├── patch_truncation_geometry.png      # Ursprüngliche Geometrie des unteren Patches (2.65 mm)
+│       ├── retuned_axial_ratio_polar_29ghz.png # Nachjustiertes Achsenverhältnis (2.8 dB bei 29 GHz)
+│       ├── retuned_driven_patch_with_ground_holes.png # Abmessungen des nachjustierten Hauptstrahlers (2.668 mm)
+│       ├── retuned_parasitic_patch_geometry.png # Abmessungen des nachjustierten parasitären Patches (2.50 mm)
+│       ├── retuned_s11_band_edge_lower.png    # Nachjustierte untere Grenzfrequenz S11 (27.927 GHz)
+│       ├── retuned_s11_band_edge_upper.png    # Nachjustierte obere Grenzfrequenz S11 (29.711 GHz)
+│       ├── retuned_vswr.png                   # Nachjustiertes VSWR (1.30 bei 29.0 GHz)
+│       ├── simulation_s11_band_edge_lower.png # Ursprüngliche untere Grenzfrequenz S11 (27.94 GHz)
+│       ├── simulation_s11_band_edge_upper.png # Ursprüngliche obere Grenzfrequenz S11 (29.58 GHz)
 │       ├── simulation_s_parameters_s11.png    # Frequenzverlauf des Reflexionsfaktors S11 des Einzelstrahlers
 │       ├── simulation_vswr.png                # Stehwellenverhältnis (VSWR) des Einzelstrahlers
 │       └── simulation_z_parameters.png        # Eingangsimpedanz Z11 (Real- und Imaginärteil)
@@ -98,7 +109,7 @@ Lambda/Viertel-Anpassungsstichleitung: Länge $L_t = \lambda_g / 4 \approx 1.83$
 <p align="center">
   <img src="docs/images/patch_truncation_geometry.png" width="500" alt="Resonator- und Abschrägungsgeometrie">
   <br>
-  <em>Abb. 1. Layout des quadratischen unteren Resonators: Kantenlänge 2.65 mm, Eckenabschrägung 0.35 mm.</em>
+  <em>Abb. 1. Ursprüngliches Layout des unteren Resonators: Kantenlänge 2.65 mm, Eckenabschrägung 0.35 mm.</em>
 </p>
 
 ## 3D-Modellierung und Optimierung des Einzelstrahlers
@@ -124,7 +135,7 @@ Die Resonatorkopplung erweitert die Anpassungsbandbreite ($S_{11} < -10$ dB) sow
 <p align="center">
   <img src="docs/images/parasitic_patch_geometry.png" width="500" alt="Geometrie des oberen parasitären Resonators">
   <br>
-  <em>Abb. 2. Layout des oberen parasitären Strahlers: Kantenlänge 2.01 mm, Abschrägung 0.29 mm, Substratdicke 0.203 mm.</em>
+  <em>Abb. 2. Ursprüngliches Layout des oberen parasitären Strahlers: Kantenlänge 2.01 mm, Abschrägung 0.29 mm, Substratdicke 0.203 mm.</em>
 </p>
 
 <p align="center">
@@ -155,13 +166,13 @@ Betriebsbandbreite bei -10 dB: $\Delta f = 1.638$ GHz (Bereich 27.94–29.58 GHz
 <p align="center">
   <img src="docs/images/simulation_s11_band_edge_lower.png" width="700" alt="Untere Bandgrenze S11">
   <br>
-  <em>Abb. 5. Untere Grenzfrequenz bei S11 = -10 dB (Marker 27.938 GHz, -10.28 dB).</em>
+  <em>Abb. 5. Ursprüngliche untere Grenzfrequenz bei S11 = -10 dB (Marker 27.938 GHz, -10.28 dB).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/simulation_s11_band_edge_upper.png" width="700" alt="Obere Bandgrenze S11">
   <br>
-  <em>Abb. 6. Obere Grenzfrequenz bei S11 = -10 dB (Marker 29.576 GHz, -10.58 dB).</em>
+  <em>Abb. 6. Ursprüngliche obere Grenzfrequenz bei S11 = -10 dB (Marker 29.576 GHz, -10.58 dB).</em>
 </p>
 
 ### 2. Stehwellenverhältnis (VSWR)
@@ -170,7 +181,7 @@ Bei 29.0 GHz liegt das Stehwellenverhältnis bei 1.56. Im gesamten Betriebsband 
 <p align="center">
   <img src="docs/images/simulation_vswr.png" width="700" alt="Stehwellenverhältnis VSWR">
   <br>
-  <em>Abb. 7. Frequenzverlauf des Stehwellenverhältnisses (VSWR) des Einzelstrahlers.</em>
+  <em>Abb. 7. Ursprünglicher Frequenzverlauf des VSWR des Einzelstrahlers.</em>
 </p>
 
 ### 3. Eingangsimpedanz ($Z_{11}$)
@@ -188,7 +199,7 @@ In Hauptstrahlrichtung ($\theta = 0^\circ$) beträgt das Achsenverhältnis bei 2
 <p align="center">
   <img src="docs/images/axial_ratio_polar_29ghz.png" width="650" alt="Polardiagramm des Achsenverhältnisses">
   <br>
-  <em>Abb. 9. Polardiagramm des Achsenverhältnisses (Schnitt Phi=90°) bei 29 GHz.</em>
+  <em>Abb. 9. Polardiagramm des Achsenverhältnisses des Einzelstrahlers (Schnitt Phi=90°) bei 29 GHz.</em>
 </p>
 
 ## Untersuchung des 8x8-Antennenarrays und Oberflächenwelleneffekte
@@ -264,7 +275,95 @@ Bei 30.0 GHz verbleibt das Achsenverhältnis lediglich in einem extrem schmalen 
   <em>Abb. 16. Polardiagramm des Achsenverhältnisses des 8x8-Arrays bei 30 GHz.</em>
 </p>
 
-Diese Untersuchung verdeutlicht, dass zur Erhaltung zirkularer Polarisation in Millimeterwellen-Arrays Maßnahmen zur Unterdrückung von Oberflächenwellen (wie Entkopplungsgräben im Substrat oder EBG-Strukturen) zwingend erforderlich sind.
+## Unterdrückung von Oberflächenwellen durch Masseflächen-Perforation und Neujustierung des Strahlers
+
+Zur Entkopplung benachbarter Strahler wurden künstliche elektromagnetische Diskontinuitäten geschaffen: In der Massefläche um jedes Strahlerelement wurde ein Ring aus Perforationslöchern eingebracht. Diese Löcher wirken als Barriere mit hohem Oberflächenwiderstand, welche die sich im Substrat ausbreitenden Oberflächenwellen streut und reflektiert.
+
+Da die Perforationen die lokale Randbedingung und die Reaktanz der Apertur verändern, erfolgte eine vollständige Neujustierung der Resonatorgeometrie und der Speisestichleitung.
+
+### 1. Geometrie der Masseflächen-Perforation und Apertur
+Der schützende Perforationsring um den Strahler weist folgende Abmessungen auf:
+
+Lateraler Abstand vom Resonatorzentrum zur seitlichen Lochreihe: 1.94 mm.<br>
+Diagonaler Abstand vom Resonatorzentrum zu den Ecklöchern: 1.738 mm.<br>
+Länge der Kreuzschlitzarme der Apertur: 1.693 mm.<br>
+Breite der Kreuzschlitzapertur: 0.101 mm.
+
+<p align="center">
+  <img src="docs/images/cross_slot_aperture_dimensions.png" width="450" alt="Abmessungen der Kreuzschlitzapertur">
+  <br>
+  <em>Abb. 17. Geometrie der Kopplungsapertur: Schlitzlänge 1.693 mm, Schlitzbreite 0.101 mm im Perforationsfeld.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/ground_holes_lateral_spacing.png" width="450" alt="Lateraler Abstand zu den Masseleiter-Löchern">
+  <br>
+  <em>Abb. 18. Lateraler Abstand vom Elementzentrum zur Perforationsreihe: 1.94 mm.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/ground_holes_diagonal_spacing.png" width="450" alt="Diagonaler Abstand zu den Masseleiter-Löchern">
+  <br>
+  <em>Abb. 19. Diagonaler Abstand vom Elementzentrum zu den Ecklöchern: 1.738 mm.</em>
+</p>
+
+### 2. Resonator-Neujustierung und Stichleitungs-Verkürzung
+Um die durch die Masseleiter-Diskontinuitäten verursachte Blindwiderstandsverschiebung zu kompensieren, wurde die Lambda/Viertel-Anpassungsstichleitung leicht verkürzt. Die Resonatorabmessungen wurden angepasst:
+
+Kantenlänge des unteren Hauptstrahlers vergrößert auf 2.668 mm $\times$ 2.668 mm.<br>
+Diagonale Eckenabschrägungen des unteren Patches angepasst auf $\Delta c = 0.373$ mm.<br>
+Kantenlänge des oberen parasitären Patches auf 2.50 mm $\times$ 2.50 mm optimiert.
+
+<p align="center">
+  <img src="docs/images/retuned_driven_patch_with_ground_holes.png" width="500" alt="Geometrie des nachjustierten Hauptstrahlers">
+  <br>
+  <em>Abb. 20. Layout des nachjustierten Hauptstrahlers: Kantenlänge 2.668 mm, Eckenabschrägung 0.373 mm.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_parasitic_patch_geometry.png" width="500" alt="Geometrie des nachjustierten parasitären Strahlers">
+  <br>
+  <em>Abb. 21. Layout des nachjustierten parasitären Strahlers: Kantenlänge 2.50 mm.</em>
+</p>
+
+### 3. Ergebnisse nach der Optimierung
+
+Reflexionsfaktor ($S_{11}$) und Betriebsbandbreite:
+Untere Bandgrenze bei $S_{11} = -10$ dB: $f_{\text{low}} = 27.927$ GHz ($S_{11} = -10.06$ dB).<br>
+Obere Bandgrenze bei $S_{11} = -10$ dB: $f_{\text{high}} = 29.711$ GHz ($S_{11} = -10.06$ dB).<br>
+Die gesamte -10-dB-Anpassungsbandbreite erweiterte sich auf $\Delta f = 1.784$ GHz (Bereich 27.93–29.71 GHz).
+
+Stehwellenverhältnis (VSWR):
+Bei 29.0 GHz verbesserte sich das Stehwellenverhältnis auf 1.30 (im Ursprungsentwurf 1.56).<br>
+Das Minimum von 1.05 liegt bei 28.7 GHz und gewährleistet hervorragende 50-Ohm-Anpassung.
+
+Wiederherstellung der zirkularen Polarisation (Axial Ratio):
+Bei 29.0 GHz verbesserte sich das Achsenverhältnis in Normalenrichtung ($\theta = 0^\circ$) auf 2.8 dB.<br>
+Das Achsenverhältnis unterschreitet nun wieder die kritische Grenze von 3.0 dB, was die erfolgreiche Dämpfung parasitärer Oberflächenwellen und die Rückkehr zur zirkularen Polarisation belegt.
+
+<p align="center">
+  <img src="docs/images/retuned_s11_band_edge_lower.png" width="700" alt="Untere Bandgrenze S11 nach Neujustierung">
+  <br>
+  <em>Abb. 22. Untere Grenzfrequenz nach Neujustierung bei S11 = -10 dB (Marker 27.927 GHz, -10.06 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_s11_band_edge_upper.png" width="700" alt="Obere Bandgrenze S11 nach Neujustierung">
+  <br>
+  <em>Abb. 23. Obere Grenzfrequenz nach Neujustierung bei S11 = -10 dB (Marker 29.711 GHz, -10.06 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_vswr.png" width="700" alt="VSWR nach Neujustierung">
+  <br>
+  <em>Abb. 24. Frequenzverlauf des VSWR nach Neujustierung (VSWR = 1.30 bei 29.0 GHz).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/retuned_axial_ratio_polar_29ghz.png" width="650" alt="Achsenverhältnis nach Neujustierung bei 29 GHz">
+  <br>
+  <em>Abb. 25. Polardiagramm des Achsenverhältnisses bei 29 GHz: Wiederherstellung auf 2.8 dB (< 3.0 dB).</em>
+</p>
 
 ## Lizenz
 
