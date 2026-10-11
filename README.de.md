@@ -61,13 +61,12 @@ Die Struktur des Repositories gliedert sich wie folgt:
 │       ├── axial_ratio_3d_pattern_29ghz.png   # 3D-Diagramm des Achsenverhältnisses des Einzelstrahlers
 │       ├── axial_ratio_polar_29ghz.png        # Polardiagramm des Achsenverhältnisses des Einzelstrahlers
 │       ├── cross_slot_aperture_dimensions.png # Abmessungen der Kreuzschlitzapertur (1.693 mm x 0.101 mm)
-│       ├── ground_holes_diagonal_spacing.png  # Diagonaler Abstand zu den Masseleiter-Löchern (1.738 mm)
 │       ├── ground_holes_lateral_spacing.png   # Lateraler Abstand zu den Masseleiter-Löchern (1.94 mm)
 │       ├── parasitic_patch_geometry.png       # Ursprüngliche Geometrie des oberen parasitären Patches (2.01 mm)
 │       ├── patch_truncation_geometry.png      # Ursprüngliche Geometrie des unteren Patches (2.65 mm)
 │       ├── retuned_axial_ratio_polar_29ghz.png # Nachjustiertes Achsenverhältnis (2.8 dB bei 29 GHz)
 │       ├── retuned_driven_patch_with_ground_holes.png # Abmessungen des nachjustierten Hauptstrahlers (2.668 mm)
-│       ├── retuned_parasitic_patch_geometry.png # Abmessungen des nachjustierten parasitären Patches (2.50 mm)
+│       ├── retuned_quarter_wave_transformer.png # Länge des Lambda/Viertel-Transformators (1.738 mm)
 │       ├── retuned_s11_band_edge_lower.png    # Nachjustierte untere Grenzfrequenz S11 (27.927 GHz)
 │       ├── retuned_s11_band_edge_upper.png    # Nachjustierte obere Grenzfrequenz S11 (29.711 GHz)
 │       ├── retuned_vswr.png                   # Nachjustiertes VSWR (1.30 bei 29.0 GHz)
@@ -285,7 +284,6 @@ Da die Perforationen die lokale Randbedingung und die Reaktanz der Apertur verä
 Der schützende Perforationsring um den Strahler weist folgende Abmessungen auf:
 
 Lateraler Abstand vom Resonatorzentrum zur seitlichen Lochreihe: 1.94 mm.<br>
-Diagonaler Abstand vom Resonatorzentrum zu den Ecklöchern: 1.738 mm.<br>
 Länge der Kreuzschlitzarme der Apertur: 1.693 mm.<br>
 Breite der Kreuzschlitzapertur: 0.101 mm.
 
@@ -301,29 +299,24 @@ Breite der Kreuzschlitzapertur: 0.101 mm.
   <em>Abb. 18. Lateraler Abstand vom Elementzentrum zur Perforationsreihe: 1.94 mm.</em>
 </p>
 
-<p align="center">
-  <img src="docs/images/ground_holes_diagonal_spacing.png" width="450" alt="Diagonaler Abstand zu den Masseleiter-Löchern">
-  <br>
-  <em>Abb. 19. Diagonaler Abstand vom Elementzentrum zu den Ecklöchern: 1.738 mm.</em>
-</p>
-
 ### 2. Resonator-Neujustierung und Stichleitungs-Verkürzung
-Um die durch die Masseleiter-Diskontinuitäten verursachte Blindwiderstandsverschiebung zu kompensieren, wurde die Lambda/Viertel-Anpassungsstichleitung leicht verkürzt. Die Resonatorabmessungen wurden angepasst:
+Um die durch die Masseleiter-Diskontinuitäten verursachte Blindwiderstandsverschiebung zu kompensieren, wurde der Lambda/Viertel-Transformator (Anpassungsstichleitung) auf eine Länge von $L_t = 1.738$ mm verkürzt (ursprünglich 1.83 mm). Die Resonatorabmessungen wurden angepasst:
 
+Länge des verkürzten Lambda/Viertel-Transformators: $L_t = 1.738$ mm.<br>
 Kantenlänge des unteren Hauptstrahlers vergrößert auf 2.668 mm $\times$ 2.668 mm.<br>
 Diagonale Eckenabschrägungen des unteren Patches angepasst auf $\Delta c = 0.373$ mm.<br>
 Kantenlänge des oberen parasitären Patches auf 2.50 mm $\times$ 2.50 mm optimiert.
 
 <p align="center">
-  <img src="docs/images/retuned_driven_patch_with_ground_holes.png" width="500" alt="Geometrie des nachjustierten Hauptstrahlers">
+  <img src="docs/images/retuned_quarter_wave_transformer.png" width="450" alt="Länge des Lambda/Viertel-Transformators">
   <br>
-  <em>Abb. 20. Layout des nachjustierten Hauptstrahlers: Kantenlänge 2.668 mm, Eckenabschrägung 0.373 mm.</em>
+  <em>Abb. 19. Länge des verkürzten Lambda/Viertel-Transformators (Stichleitung): 1.738 mm.</em>
 </p>
 
 <p align="center">
-  <img src="docs/images/retuned_parasitic_patch_geometry.png" width="500" alt="Geometrie des nachjustierten parasitären Strahlers">
+  <img src="docs/images/retuned_driven_patch_with_ground_holes.png" width="500" alt="Geometrie des nachjustierten Hauptstrahlers">
   <br>
-  <em>Abb. 21. Layout des nachjustierten parasitären Strahlers: Kantenlänge 2.50 mm.</em>
+  <em>Abb. 20. Layout des nachjustierten Hauptstrahlers: Kantenlänge 2.668 mm, Eckenabschrägung 0.373 mm.</em>
 </p>
 
 ### 3. Ergebnisse nach der Optimierung
@@ -344,25 +337,25 @@ Das Achsenverhältnis unterschreitet nun wieder die kritische Grenze von 3.0 dB,
 <p align="center">
   <img src="docs/images/retuned_s11_band_edge_lower.png" width="700" alt="Untere Bandgrenze S11 nach Neujustierung">
   <br>
-  <em>Abb. 22. Untere Grenzfrequenz nach Neujustierung bei S11 = -10 dB (Marker 27.927 GHz, -10.06 dB).</em>
+  <em>Abb. 21. Untere Grenzfrequenz nach Neujustierung bei S11 = -10 dB (Marker 27.927 GHz, -10.06 dB).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/retuned_s11_band_edge_upper.png" width="700" alt="Obere Bandgrenze S11 nach Neujustierung">
   <br>
-  <em>Abb. 23. Obere Grenzfrequenz nach Neujustierung bei S11 = -10 dB (Marker 29.711 GHz, -10.06 dB).</em>
+  <em>Abb. 22. Obere Grenzfrequenz nach Neujustierung bei S11 = -10 dB (Marker 29.711 GHz, -10.06 dB).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/retuned_vswr.png" width="700" alt="VSWR nach Neujustierung">
   <br>
-  <em>Abb. 24. Frequenzverlauf des VSWR nach Neujustierung (VSWR = 1.30 bei 29.0 GHz).</em>
+  <em>Abb. 23. Frequenzverlauf des VSWR nach Neujustierung (VSWR = 1.30 bei 29.0 GHz).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/retuned_axial_ratio_polar_29ghz.png" width="650" alt="Achsenverhältnis nach Neujustierung bei 29 GHz">
   <br>
-  <em>Abb. 25. Polardiagramm des Achsenverhältnisses bei 29 GHz: Wiederherstellung auf 2.8 dB (< 3.0 dB).</em>
+  <em>Abb. 24. Polardiagramm des Achsenverhältnisses bei 29 GHz: Wiederherstellung auf 2.8 dB (< 3.0 dB).</em>
 </p>
 
 ## Lizenz

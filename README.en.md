@@ -61,13 +61,12 @@ The project files are organized as follows:
 │       ├── axial_ratio_3d_pattern_29ghz.png   # 3D Farfield Axial Ratio radiation pattern of single element
 │       ├── axial_ratio_polar_29ghz.png        # 2D polar Axial Ratio radiation cut of single element (29 GHz)
 │       ├── cross_slot_aperture_dimensions.png # Dimensions of coupling cross-slot aperture (1.693 mm x 0.101 mm)
-│       ├── ground_holes_diagonal_spacing.png  # Diagonal spacing to ground plane holes (1.738 mm)
 │       ├── ground_holes_lateral_spacing.png   # Lateral spacing to ground plane holes (1.94 mm)
 │       ├── parasitic_patch_geometry.png       # Initial upper parasitic patch dimensions (2.01 mm)
 │       ├── patch_truncation_geometry.png      # Initial lower driven patch dimensions (2.65 mm)
 │       ├── retuned_axial_ratio_polar_29ghz.png # Retuned Axial Ratio polar cut (2.8 dB at 29 GHz)
 │       ├── retuned_driven_patch_with_ground_holes.png # Retuned driven patch dimensions (2.668 mm)
-│       ├── retuned_parasitic_patch_geometry.png # Retuned parasitic patch dimensions (2.50 mm)
+│       ├── retuned_quarter_wave_transformer.png # Retuned quarter-wave transformer length (1.738 mm)
 │       ├── retuned_s11_band_edge_lower.png    # Retuned lower return loss band edge (27.927 GHz)
 │       ├── retuned_s11_band_edge_upper.png    # Retuned upper return loss band edge (29.711 GHz)
 │       ├── retuned_vswr.png                   # Retuned VSWR response (1.30 at 29.0 GHz)
@@ -285,7 +284,6 @@ Because the introduction of ground plane perforations altered the local electrom
 The defensive perforation ring is dimensioned as follows:
 
 Lateral distance from element center to lateral hole fence: 1.94 mm.<br>
-Diagonal distance from element center to corner holes: 1.738 mm.<br>
 Coupling cross-slot arm length: 1.693 mm.<br>
 Coupling cross-slot width: 0.101 mm.
 
@@ -301,29 +299,24 @@ Coupling cross-slot width: 0.101 mm.
   <em>Figure 18. Lateral distance from radiator center to ground perforation fence: 1.94 mm.</em>
 </p>
 
-<p align="center">
-  <img src="docs/images/ground_holes_diagonal_spacing.png" width="450" alt="Diagonal Spacing to Ground Holes">
-  <br>
-  <em>Figure 19. Diagonal distance from radiator center to corner ground holes: 1.738 mm.</em>
-</p>
-
 ### 2. Resonator Retuning and Stub Shortening
-To compensate for reactive loading shifts caused by the perforated ground structure, the quarter-wave tuning stub was slightly shortened. The patch radiator dimensions were readjusted:
+To compensate for reactive loading shifts caused by the perforated ground structure, the quarter-wave tuning transformer (stub) was shortened to a length of $L_t = 1.738$ mm (originally 1.83 mm). The patch radiator dimensions were readjusted:
 
+Shortened quarter-wave transformer length: $L_t = 1.738$ mm.<br>
 Lower driven square patch dimension increased to 2.668 mm $\times$ 2.668 mm.<br>
 Diagonal corner truncations on the lower patch adjusted to $\Delta c = 0.373$ mm.<br>
 Upper parasitic square patch dimension enlarged to 2.50 mm $\times$ 2.50 mm.
 
 <p align="center">
-  <img src="docs/images/retuned_driven_patch_with_ground_holes.png" width="500" alt="Retuned Lower Driven Patch Layout">
+  <img src="docs/images/retuned_quarter_wave_transformer.png" width="450" alt="Quarter-Wave Transformer Length">
   <br>
-  <em>Figure 20. Retuned driven radiator layout: patch side 2.668 mm, corner truncation 0.373 mm.</em>
+  <em>Figure 19. Length of the retuned quarter-wave transformer (tuning stub): 1.738 mm.</em>
 </p>
 
 <p align="center">
-  <img src="docs/images/retuned_parasitic_patch_geometry.png" width="500" alt="Retuned Upper Parasitic Patch Layout">
+  <img src="docs/images/retuned_driven_patch_with_ground_holes.png" width="500" alt="Retuned Lower Driven Patch Layout">
   <br>
-  <em>Figure 21. Retuned upper parasitic radiator layout: patch side 2.50 mm.</em>
+  <em>Figure 20. Retuned driven radiator layout: patch side 2.668 mm, corner truncation 0.373 mm.</em>
 </p>
 
 ### 3. Simulation Results After Retuning
@@ -344,25 +337,25 @@ The axial ratio value successfully returned below the 3.0 dB threshold across a 
 <p align="center">
   <img src="docs/images/retuned_s11_band_edge_lower.png" width="700" alt="Retuned S11 Lower Band Edge">
   <br>
-  <em>Figure 22. Retuned lower matching band edge at S11 = -10 dB (marker 27.927 GHz, -10.06 dB).</em>
+  <em>Figure 21. Retuned lower matching band edge at S11 = -10 dB (marker 27.927 GHz, -10.06 dB).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/retuned_s11_band_edge_upper.png" width="700" alt="Retuned S11 Upper Band Edge">
   <br>
-  <em>Figure 23. Retuned upper matching band edge at S11 = -10 dB (marker 29.711 GHz, -10.06 dB).</em>
+  <em>Figure 22. Retuned upper matching band edge at S11 = -10 dB (marker 29.711 GHz, -10.06 dB).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/retuned_vswr.png" width="700" alt="Retuned VSWR Frequency Response">
   <br>
-  <em>Figure 24. Simulated VSWR response after element retuning (VSWR = 1.30 at 29.0 GHz).</em>
+  <em>Figure 23. Simulated VSWR response after element retuning (VSWR = 1.30 at 29.0 GHz).</em>
 </p>
 
 <p align="center">
   <img src="docs/images/retuned_axial_ratio_polar_29ghz.png" width="650" alt="Retuned Axial Ratio at 29 GHz">
   <br>
-  <em>Figure 25. Farfield Axial Ratio polar cut at 29 GHz: successful restoration to 2.8 dB (< 3.0 dB).</em>
+  <em>Figure 24. Farfield Axial Ratio polar cut at 29 GHz: successful restoration to 2.8 dB (< 3.0 dB).</em>
 </p>
 
 ## License
