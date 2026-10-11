@@ -16,6 +16,7 @@ This repository contains the design, analytical synthesis, CAD assets, and full-
 [8x8 Antenna Array Investigation and Surface Wave Effects](#8x8-antenna-array-investigation-and-surface-wave-effects)<br>
 [Surface Wave Suppression via Ground Plane Perforations and Element Retuning](#surface-wave-suppression-via-ground-plane-perforations-and-element-retuning)<br>
 [2×2 Sequentially Rotated Sub-Array Architecture](#22-sequentially-rotated-sub-array-architecture)<br>
+[Final Optimized 8×8 Array Integration and Phased Beam Steering](#final-optimized-88-array-integration-and-phased-beam-steering)<br>
 [License](#license)
 
 ## Overview
@@ -27,10 +28,12 @@ Key design features:
 Topology: Multilayer stacked microstrip patch antenna with parasitic resonance.<br>
 Excitation: Non-contact aperture electromagnetic coupling through a cross-slot in the ground plane fed by a microstrip line.<br>
 Impedance Matching: Centered open-circuited quarter-wave ($\lambda_g/4$) tuning stub positioned directly over the aperture cross to compensate for slot reactance.<br>
-Circular Polarization: Corner-truncated square patch geometry ($45^\circ$ chamfers) on radiating elements generating degenerate orthogonal modes ($TM_{10}$ and TM_{01}) in quadrature ($90^\circ$ phase shift).<br>
+Circular Polarization: Corner-truncated square patch geometry ($45^\circ$ chamfers) on radiating elements generating degenerate orthogonal modes ($TM_{10}$ and $TM_{01}$) in quadrature ($90^\circ$ phase shift).<br>
 Bandwidth Expansion: Upper parasitic radiating patch coupled electromagnetically to the driven patch, providing a dual-resonance frequency response over the 28.0–30.0 GHz band.<br>
 Surface Wave Mitigation: Ground plane perforations encircling radiators to generate discontinuities that reflect substrate surface waves and mitigate inter-element mutual coupling.<br>
-Ultra-Wideband CP Array Performance: $2 \times 2$ sequential rotation sub-array topology ($0^\circ, 90^\circ, 180^\circ, 270^\circ$) providing mutual cancellation of cross-polarized fields and exceptional axial ratio bandwidth.
+Ultra-Wideband CP Array Performance: $2 \times 2$ sequential rotation sub-array topology ($0^\circ, 90^\circ, 180^\circ, 270^\circ$) providing mutual cancellation of cross-polarized fields and exceptional axial ratio bandwidth.<br>
+Material Stackup and Substrate: Low-loss Rogers RT/duroid 5870 ($h = 0.254$ mm, $\varepsilon_r = 2.33$, $\tan\delta = 0.0012$) with 35 $\mu$m copper (1 oz), board size 90 $\times$ 89 mm with broad ground margins preventing edge element VSWR degradation.<br>
+RF Isolation and Shielding: Aperture coupling through continuous ground plane provides robust isolation between radiating apertures and backside beamforming ICs (RFICs).
 
 ## Project Structure
 
@@ -53,12 +56,27 @@ The project files are organized as follows:
 │   └── patch_antenna_analytical_calc.xmcd     # Mathematical derivation and analytical design (Mathcad 14)
 ├── docs/
 │   └── images/
+│       ├── antenna_stackup_exploded_view.jpg  # Exploded view diagram of antenna PCB stackup
 │       ├── array_8x8_3d_directivity_29ghz.png # 3D Directivity pattern of 8x8 array at 29 GHz (21.63 dBi)
 │       ├── array_8x8_3d_efield_29ghz.png      # 3D E-field radiation distribution of 8x8 array at 29 GHz
+│       ├── array_8x8_3d_steered_beam_0deg.png # 3D beam pattern of 8x8 array steered to 0° (boresight)
+│       ├── array_8x8_3d_steered_beam_17deg.png # 3D beam pattern of 8x8 array steered to 17°
+│       ├── array_8x8_3d_steered_beam_33deg.png # 3D beam pattern of 8x8 array steered to 33°
 │       ├── array_8x8_axial_ratio_polar_28ghz.png # Polar Axial Ratio cut of 8x8 array at 28 GHz
 │       ├── array_8x8_axial_ratio_polar_29ghz.png # Polar Axial Ratio cut of 8x8 array at 29 GHz
 │       ├── array_8x8_axial_ratio_polar_30ghz.png # Polar Axial Ratio cut of 8x8 array at 30 GHz
+│       ├── array_8x8_dimensions_and_ground_margin.png # PCB layout 90x89 mm with broad ground margins
+│       ├── array_8x8_final_3d_efield_29ghz.png # 3D E-field distribution of final 8x8 array at 29 GHz
+│       ├── array_8x8_final_axial_ratio_polar_28ghz.png # Axial Ratio of final 8x8 array at 28 GHz (2.1 dB)
+│       ├── array_8x8_final_axial_ratio_polar_29ghz.png # Axial Ratio of final 8x8 array at 29 GHz (1.6 dB)
+│       ├── array_8x8_final_axial_ratio_polar_30ghz.png # Axial Ratio of final 8x8 array at 30 GHz (0.7 dB)
+│       ├── array_8x8_final_gain_polar_29ghz.png # Realized Gain of final 8x8 array at 29 GHz (21.8 dBi)
+│       ├── array_8x8_final_model_ports.png    # 3D model of final 8x8 array with 64 ports in CST
+│       ├── array_8x8_final_vswr_ports.png     # VSWR characteristics across ports of final 8x8 array
 │       ├── array_8x8_gain_polar_29ghz.png     # Polar Gain cut of 8x8 array at 29 GHz (Gain = 21.3 dBi)
+│       ├── array_8x8_steered_beam_0deg.png    # Polar E-field pattern steered to boresight (0°)
+│       ├── array_8x8_steered_beam_17deg.png   # Polar E-field pattern steered to 17°
+│       ├── array_8x8_steered_beam_33deg.png   # Polar E-field pattern steered to 33°
 │       ├── array_8x8_vswr_ports.png           # Multi-port VSWR characteristics of 8x8 array
 │       ├── axial_ratio_3d_pattern_29ghz.png   # 3D Farfield Axial Ratio radiation pattern of single element
 │       ├── axial_ratio_polar_29ghz.png        # 2D polar Axial Ratio radiation cut of single element (29 GHz)
@@ -84,19 +102,21 @@ The project files are organized as follows:
 │       ├── subarray_2x2_axial_ratio_polar_30ghz.png # Axial Ratio cut of 2x2 sub-array at 30 GHz (1.6 dB)
 │       ├── subarray_2x2_sequential_rotation_geometry.png # 2x2 sub-array 90° rotation geometry
 │       └── subarray_2x2_vswr_ports.png        # Port VSWR curves of 2x2 sub-array
-└── simulation/
-    └── cp_stacked_patch_antenna_29ghz.cst     # Full-wave 3D electromagnetic model (CST Studio Suite)
+├── simulation/
+│   ├── cp_stacked_patch_antenna_29ghz.cst     # Full-wave 3D electromagnetic model of single element (CST Studio Suite)
+│   └── ka_band_patch_array_8x8_full_model.cst # Full-wave 3D simulation model of final 8x8 array (CST Studio Suite)
 ```
 
 ## Analytical Calculation
 
 The initial analytical dimensioning was performed in Mathcad ([patch_antenna_analytical_calc.xmcd](calculations/patch_antenna_analytical_calc.xmcd)):
 
-### 1. Substrate Properties
-Relative dielectric permittivity: $\varepsilon_r = 2.33$<br>
-Substrate thickness: $h = 0.254$ mm (10 mil)<br>
-Copper conductor thickness: $t = 35\ \mu\text{m}$ (1 oz Cu)<br>
-Frequency specifications: $f_1 = 28.0$ GHz, $f_2 = 30.0$ GHz, center frequency $f_0 = 29.0$ GHz
+### 1. Substrate Properties and Stackup
+Substrate material: Rogers RT/duroid 5870 glass microfiber reinforced PTFE.<br>
+Relative dielectric permittivity: $\varepsilon_r = 2.33$, loss tangent $\tan\delta = 0.0012$.<br>
+Dielectric layer thickness: $h = 0.254$ mm (10 mil).<br>
+Copper foil thickness: $t = 35\ \mu\text{m}$ (1 oz electrodeposited copper).<br>
+Frequency specifications: $f_1 = 28.0$ GHz, $f_2 = 30.0$ GHz, center frequency $f_0 = 29.0$ GHz.
 
 ### 2. Fundamental Patch Dimensions
 Theoretical width:
@@ -446,6 +466,155 @@ At 30.0 GHz: Broadside axial ratio evaluates to 1.6 dB (where the standard 8x8 a
   <img src="docs/images/subarray_2x2_axial_ratio_polar_30ghz.png" width="650" alt="Axial Ratio of 2x2 Sub-Array at 30 GHz">
   <br>
   <em>Figure 31. Polar Axial Ratio cut of 2x2 sub-array at 30 GHz (broadside AR = 1.6 dB).</em>
+</p>
+
+## Final Optimized 8×8 Array Integration and Phased Beam Steering
+
+The synergistic integration of the retuned stacked patch resonators, ground plane perforation barriers, and $2 \times 2$ sequential rotation clusters yields a robust 64-element planar array ($8 \times 8$). Parasitic surface wave cross-coupling is mitigated, successfully retaining circular polarization purity across the entire 28.0–30.0 GHz operating band.
+
+### 1. Board Construction, Material Stackup, and Edge Effect Mitigation
+The full-wave electromagnetic model captures the complete multilayer PCB environment:
+
+Substrate laminate: Low-loss Rogers RT/duroid 5870 with $\varepsilon_r = 2.33$ and $\tan\delta = 0.0012$.<br>
+Dielectric layer thickness: $h = 0.254$ mm (10 mil).<br>
+Conductor metallization: Copper foil with thickness $t = 35\ \mu\text{m}$ (1 oz Cu).<br>
+Antenna board dimensions: 90.00 $\times$ 89.00 mm (up to 99 $\times$ 89 mm including mechanical mounting margins).
+
+Broad Ground Margins:
+Extensive solid copper ground margins surround the 8x8 active aperture.<br>
+Consequently, perimeter radiating elements operate in electromagnetic boundary conditions identical to the central elements, preventing edge-truncation impedance mismatch and peripheral port VSWR degradation.
+
+Aperture Ground Shielding:
+Feeding via cross-slot aperture electromagnetic coupling through a solid ground plane creates an inherent shielding barrier that protects the antenna aperture from high-frequency clock harmonics, noise, and interference generated by beamforming integrated circuits (RFICs) mounted on the backside of the PCB.
+
+<p align="center">
+  <img src="docs/images/antenna_stackup_exploded_view.jpg" width="550" alt="Exploded View of Antenna Stackup">
+  <br>
+  <em>Figure 32. Exploded structural diagram: microstrip feeder stub, ground plane with coupling cross-slot and perforation rings, driven patch, and upper parasitic resonator.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_dimensions_and_ground_margin.png" width="600" alt="PCB Dimensions and Ground Margin">
+  <br>
+  <em>Figure 33. Antenna PCB layout (90.00 x 89.00 mm): 8x8 radiator array surrounded by protective perforation fences and wide ground margins.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_model_ports.png" width="550" alt="3D Model of 8x8 Array with 64 Ports">
+  <br>
+  <em>Figure 34. Full-wave CST Studio Suite 3D simulation model of the 8x8 array with all 64 independent waveguide ports labeled.</em>
+</p>
+
+### 2. Multi-Port Impedance Matching in the Optimized 8×8 Array (VSWR)
+Unlike the preliminary array simulation where mutual coupling caused severe impedance divergence between ports, the final array features tightly clustered VSWR curves across all channels:
+
+Resonance minima reach 1.0 to 1.2 in the vicinity of 28.8 GHz.<br>
+Broadband impedance matching meeting the $\text{VSWR} < 2.0$ benchmark is consistently maintained from 28.1 to 29.7 GHz across all 64 ports.
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_vswr_ports.png" width="700" alt="Final 8x8 Array Port VSWR">
+  <br>
+  <em>Figure 35. VSWR frequency response across ports of the optimized 8x8 array: uniform matching without edge port detuning.</em>
+</p>
+
+### 3. Preservation of Circular Polarization Across the Entire Operating Band
+The combination of ground perforation fences and sequential rotation architecture successfully suppresses spurious coupling modes. Across the complete Ka-band operational channel, the Axial Ratio remains safely below the 3.0 dB threshold:
+
+At 28.0 GHz: Broadside axial ratio evaluates to 2.1 dB (completely recovered from the degraded 5.3 dB in the uncompensated array).<br>
+At 29.0 GHz: Broadside axial ratio evaluates to 1.6 dB (compared to 3.9 dB in the uncompensated array).<br>
+At 30.0 GHz: Broadside axial ratio evaluates to an exceptional 0.7 dB (compared to 2.6 dB with an extremely constricted beamwidth in the uncompensated array).
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_axial_ratio_polar_28ghz.png" width="650" alt="Final 8x8 Array Axial Ratio at 28 GHz">
+  <br>
+  <em>Figure 36. Polar Axial Ratio cut of final 8x8 array at 28 GHz (broadside AR = 2.1 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_axial_ratio_polar_29ghz.png" width="650" alt="Final 8x8 Array Axial Ratio at 29 GHz">
+  <br>
+  <em>Figure 37. Polar Axial Ratio cut of final 8x8 array at 29 GHz (broadside AR = 1.6 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_axial_ratio_polar_30ghz.png" width="650" alt="Final 8x8 Array Axial Ratio at 30 GHz">
+  <br>
+  <em>Figure 38. Polar Axial Ratio cut of final 8x8 array at 30 GHz (broadside AR = 0.7 dB).</em>
+</p>
+
+### 4. Directivity, Gain, and Radiation Performance
+Under uniform array excitation at 29.0 GHz, the antenna array achieves high aperture efficiency:
+
+Realized Gain: 21.8 dBi (improved from 21.3 dBi).<br>
+Half-Power Beamwidth (HPBW): $10.0^\circ$.<br>
+Side Lobe Level (SLL): $-12.3$ dB.<br>
+Radiation Efficiency: 93.5% ($-0.29$ dB).<br>
+Total Efficiency: 86.4% ($-0.63$ dB).
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_gain_polar_29ghz.png" width="650" alt="Final 8x8 Array Gain at 29 GHz">
+  <br>
+  <em>Figure 39. Farfield Polar Gain cut of the final 8x8 array at 29 GHz (Gain = 21.8 dBi, HPBW = 10.0°).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_3d_efield_29ghz.png" width="700" alt="Final 8x8 Array 3D E-Field at 29 GHz">
+  <br>
+  <em>Figure 40. 3D spatial E-field pattern of final 8x8 array at 29 GHz (Emax = 395.5 V/m).</em>
+</p>
+
+### 5. Phased Array Electronic Beam Steering
+To evaluate compatibility with phased array antennas (PAA) and active electronically scanned arrays (AESA), progressive linear phase shifts were applied across elements:
+
+Beam steered to $0^\circ$ (boresight normal):<br>
+Maximum electric field: $E_{\text{max}} = 395$ V/m.<br>
+Half-Power Beamwidth: $\text{HPBW} = 9.4^\circ$.<br>
+Side Lobe Level: $\text{SLL} = -5.8$ dB.
+
+Beam steered to $17^\circ$:<br>
+Maximum electric field: $E_{\text{max}} = 391$ V/m.<br>
+Half-Power Beamwidth: $\text{HPBW} = 9.9^\circ$.<br>
+Side Lobe Level: $\text{SLL} = -5.5$ dB.
+
+Beam steered to $33^\circ$:<br>
+Maximum electric field: $E_{\text{max}} = 325$ V/m.<br>
+Half-Power Beamwidth: $\text{HPBW} = 11.7^\circ$.<br>
+Side Lobe Level: $\text{SLL} = -6.5$ dB.
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_beam_0deg.png" width="650" alt="E-Field Pattern Steered to 0 Degrees">
+  <br>
+  <em>Figure 41. E-field polar cut at 0° boresight: Emax = 395 V/m, HPBW = 9.4°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_beam_17deg.png" width="650" alt="E-Field Pattern Steered to 17 Degrees">
+  <br>
+  <em>Figure 42. E-field polar cut steered to 17°: Emax = 391 V/m, HPBW = 9.9°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_beam_33deg.png" width="650" alt="E-Field Pattern Steered to 33 Degrees">
+  <br>
+  <em>Figure 43. E-field polar cut steered to 33°: Emax = 325 V/m, HPBW = 11.7°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_steered_beam_0deg.png" width="700" alt="3D Steered Beam at 0 Degrees">
+  <br>
+  <em>Figure 44. 3D spatial beam steered to boresight normal (0°).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_steered_beam_17deg.png" width="700" alt="3D Steered Beam at 17 Degrees">
+  <br>
+  <em>Figure 45. 3D spatial beam electronically steered to 17°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_steered_beam_33deg.png" width="700" alt="3D Steered Beam at 33 Degrees">
+  <br>
+  <em>Figure 46. 3D spatial beam electronically steered to 33°.</em>
 </p>
 
 ## License

@@ -16,6 +16,7 @@ Dieses Repository dokumentiert die Auslegung, die analytische Berechnung, CAD-Mo
 [Untersuchung des 8x8-Antennenarrays und Oberflächenwelleneffekte](#untersuchung-des-8x8-antennenarrays-und-oberflächenwelleneffekte)<br>
 [Unterdrückung von Oberflächenwellen durch Masseflächen-Perforation und Neujustierung des Strahlers](#unterdrückung-von-oberflächenwellen-durch-masseflächen-perforation-und-neujustierung-des-strahlers)<br>
 [2×2-Teilarray mit sequentieller Phasen- und Raumrotation](#22-teilarray-mit-sequentieller-phasen--und-raumrotation)<br>
+[Finales optimiertes 8×8-Array und phasengesteuerte Strahlschwenkung](#finales-optimiertes-88-array-und-phasengesteuerte-strahlschwenkung)<br>
 [Lizenz](#lizenz)
 
 ## Projektübersicht
@@ -30,7 +31,9 @@ Anpassung: Zentrierte leerlaufende Lambda/Viertel-Anpassungsleitung ($\lambda_g/
 Zirkulare Polarisation: Diagonale Eckenabschrägungen (Corner Truncation, $45^\circ$) auf den Resonatorelementen zur Anregung zweier orthogonaler Moden ($TM_{10}$ und $TM_{01}$) in Quadratur ($90^\circ$ Phasenverschiebung).<br>
 Bandbreitenvergrößerung: Ein über dem Hauptstrahler angeordneter parasitärer Resonator zur Erzeugung eines doppelresonanten Frequenzverhaltens im Bereich 28.0–30.0 GHz.<br>
 Unterdrückung von Oberflächenwellen: Perforationen (Bohrungen) in der Massefläche um jeden Strahler zur Reflexion dielektrischer Oberflächenwellen und Minimierung der gegenseitigen Verkopplung.<br>
-Breitbandige zirkulare Polarisation im Array: $2 \times 2$-Teilarray-Architektur mit sequentieller Drehung ($0^\circ, 90^\circ, 180^\circ, 270^\circ$) zur Kompensation parasitärer Moden und drastischen Vergrößerung der Achsenverhältnis-Bandbreite.
+Breitbandige zirkulare Polarisation im Array: $2 \times 2$-Teilarray-Architektur mit sequentieller Drehung ($0^\circ, 90^\circ, 180^\circ, 270^\circ$) zur Kompensation parasitärer Moden und drastischen Vergrößerung der Achsenverhältnis-Bandbreite.<br>
+Materialaufbau und Substrat: Verlustarmes Rogers RT/duroid 5870 ($h = 0.254$ mm, $\varepsilon_r = 2.33$, $\tan\delta = 0.0012$) mit 35 $\mu$m Kupfer (1 oz), Leiterplattengröße 90 $\times$ 89 mm mit breiten Masseflächenrändern zur Vermeidung von Randeffekten auf das VSWR.<br>
+HF-Abschirmung: Aperturkopplung durch eine durchgehende Massefläche schirmt die Strahler zuverlässig gegen hochfrequente Störungen rückseitiger Beamforming-ICs (RFICs) ab.
 
 ## Projektstruktur
 
@@ -53,12 +56,27 @@ Die Struktur des Repositories gliedert sich wie folgt:
 │   └── patch_antenna_analytical_calc.xmcd     # Mathematische Auslegung und Leitungsberechnung (Mathcad 14)
 ├── docs/
 │   └── images/
+│       ├── antenna_stackup_exploded_view.jpg  # Explosionsdarstellung des Antennen-Leiterplattenaufbaus
 │       ├── array_8x8_3d_directivity_29ghz.png # 3D-Richtfaktor-Diagramm des 8x8-Arrays (21.63 dBi)
 │       ├── array_8x8_3d_efield_29ghz.png      # 3D-E-Feldverteilung des 8x8-Arrays bei 29 GHz
+│       ├── array_8x8_3d_steered_beam_0deg.png # 3D-Diagramm des 8x8-Arrays bei 0° (Normalenrichtung)
+│       ├── array_8x8_3d_steered_beam_17deg.png # 3D-Diagramm der Strahlschwenkung des 8x8-Arrays auf 17°
+│       ├── array_8x8_3d_steered_beam_33deg.png # 3D-Diagramm der Strahlschwenkung des 8x8-Arrays auf 33°
 │       ├── array_8x8_axial_ratio_polar_28ghz.png # Polardiagramm des Achsenverhältnisses des 8x8-Arrays (28 GHz)
 │       ├── array_8x8_axial_ratio_polar_29ghz.png # Polardiagramm des Achsenverhältnisses des 8x8-Arrays (29 GHz)
 │       ├── array_8x8_axial_ratio_polar_30ghz.png # Polardiagramm des Achsenverhältnisses des 8x8-Arrays (30 GHz)
+│       ├── array_8x8_dimensions_and_ground_margin.png # PCB-Layout 90x89 mm mit breiten Masseflächenrändern
+│       ├── array_8x8_final_3d_efield_29ghz.png # 3D-E-Feldverteilung des finalen 8x8-Arrays bei 29 GHz
+│       ├── array_8x8_final_axial_ratio_polar_28ghz.png # Achsenverhältnis des finalen 8x8-Arrays bei 28 GHz (2.1 dB)
+│       ├── array_8x8_final_axial_ratio_polar_29ghz.png # Achsenverhältnis des finalen 8x8-Arrays bei 29 GHz (1.6 dB)
+│       ├── array_8x8_final_axial_ratio_polar_30ghz.png # Achsenverhältnis des finalen 8x8-Arrays bei 30 GHz (0.7 dB)
+│       ├── array_8x8_final_gain_polar_29ghz.png # Antennengewinn des finalen 8x8-Arrays bei 29 GHz (21.8 dBi)
+│       ├── array_8x8_final_model_ports.png    # 3D-Modell des finalen 8x8-Arrays mit 64 Toren in CST
+│       ├── array_8x8_final_vswr_ports.png     # VSWR-Verhalten an den Toren des finalen 8x8-Arrays
 │       ├── array_8x8_gain_polar_29ghz.png     # Gewinndiagramm des 8x8-Arrays (Gain = 21.3 dBi)
+│       ├── array_8x8_steered_beam_0deg.png    # E-Feld-Polardiagramm bei 0° Normalenabstrahlung
+│       ├── array_8x8_steered_beam_17deg.png   # E-Feld-Polardiagramm bei Strahlschwenkung auf 17°
+│       ├── array_8x8_steered_beam_33deg.png   # E-Feld-Polardiagramm bei Strahlschwenkung auf 33°
 │       ├── array_8x8_vswr_ports.png           # Stehwellenverhältnis an den Ports des 8x8-Arrays
 │       ├── axial_ratio_3d_pattern_29ghz.png   # 3D-Diagramm des Achsenverhältnisses des Einzelstrahlers
 │       ├── axial_ratio_polar_29ghz.png        # Polardiagramm des Achsenverhältnisses des Einzelstrahlers
@@ -84,19 +102,21 @@ Die Struktur des Repositories gliedert sich wie folgt:
 │       ├── subarray_2x2_axial_ratio_polar_30ghz.png # Achsenverhältnis des 2x2-Teilarrays bei 30 GHz (1.6 dB)
 │       ├── subarray_2x2_sequential_rotation_geometry.png # 2x2-Teilarray-Geometrie mit 90°-Drehung
 │       └── subarray_2x2_vswr_ports.png        # VSWR an den Ports des 2x2-Teilarrays
-└── simulation/
-    └── cp_stacked_patch_antenna_29ghz.cst     # Elektromagnetisches 3D-Simulationsmodell (CST Studio Suite)
+├── simulation/
+│   ├── cp_stacked_patch_antenna_29ghz.cst     # Elektromagnetisches 3D-Simulationsmodell des Einzelstrahlers (CST Studio Suite)
+│   └── ka_band_patch_array_8x8_full_model.cst # Vollwellen-3D-Simulationsmodell des 8x8-Gesamtarrays (CST Studio Suite)
 ```
 
 ## Analytische Berechnung
 
 Die mathematische Vordimensionierung erfolgte in Mathcad ([patch_antenna_analytical_calc.xmcd](calculations/patch_antenna_analytical_calc.xmcd)):
 
-### 1. Substratparameter
-Relative Permittivität: $\varepsilon_r = 2.33$<br>
-Substratdicke: $h = 0.254$ mm (10 mil)<br>
-Dicke der Kupferkaschierung: $t = 35\ \mu\text{m}$<br>
-Entwurfsfrequenzbereich: $f_1 = 28.0$ GHz, $f_2 = 30.0$ GHz, Mittenfrequenz $f_0 = 29.0$ GHz
+### 1. Substratparameter und Schichtaufbau
+Substratmaterial: Rogers RT/duroid 5870 glasfaserverstärktes PTFE.<br>
+Relative Permittivität: $\varepsilon_r = 2.33$, Verlustwinkel $\tan\delta = 0.0012$.<br>
+Dicke der dielektrischen Lagen: $h = 0.254$ mm (10 mil).<br>
+Dicke der Kupferkaschierung: $t = 35\ \mu\text{m}$ (1 oz Cu).<br>
+Entwurfsfrequenzbereich: $f_1 = 28.0$ GHz, $f_2 = 30.0$ GHz, Mittenfrequenz $f_0 = 29.0$ GHz.
 
 ### 2. Abmessungen des rechteckigen Grundresonators
 Berechnete Breite:
@@ -446,6 +466,155 @@ Bei 30.0 GHz: Das axiale Verhältnis im Zenit liegt bei 1.6 dB (während im regu
   <img src="docs/images/subarray_2x2_axial_ratio_polar_30ghz.png" width="650" alt="Achsenverhältnis des 2x2-Teilarrays bei 30 GHz">
   <br>
   <em>Abb. 31. Polardiagramm des Achsenverhältnisses des 2x2-Teilarrays bei 30 GHz (AR im Zenit 1.6 dB).</em>
+</p>
+
+## Finales optimiertes 8×8-Array und phasengesteuerte Strahlschwenkung
+
+Die synergetische Integration der neujustierten gestapelten Resonatoren, der Masseflächen-Perforationsbarrieren und der $2 \times 2$-Teilarrays mit sequentieller Rotation ergibt ein robustes 64-Element-Planararray ($8 \times 8$). Die gegenseitige Verkopplung durch dielektrische Oberflächenwellen wird wirksam unterdrückt, wodurch eine hohe Reinheit der zirkularen Polarisation über das gesamte Betriebsband von 28.0 bis 30.0 GHz gewährleistet bleibt.
+
+### 1. Leiterplattenaufbau, Lagenaufbau und Unterdrückung von Randeffekten
+Das dreidimensionale Vollwellenmodell bildet den vollständigen mehrlagigen Leiterplattenaufbau ab:
+
+Substrat: Verlustarmes Rogers RT/duroid 5870 mit $\varepsilon_r = 2.33$ und $\tan\delta = 0.0012$.<br>
+Dicke der dielektrischen Lagen: $h = 0.254$ mm (10 mil).<br>
+Leiterbahnmetallisierung: Kupferfolie mit einer Dicke von $t = 35\ \mu\text{m}$ (1 oz Cu).<br>
+Abmessungen der Antennenleiterplatte: 90.00 $\times$ 89.00 mm (bis zu 99 $\times$ 89 mm einschließlich mechanischer Montageränder).
+
+Breite Masseflächenränder:
+Ausgedehnte Kupfermasseflächen umgeben die aktive 8x8-Apertur.<br>
+Dadurch unterliegen die randständigen Strahlerelemente denselben elektromagnetischen Randbedingungen wie die zentrierten Elemente, was Fehlanpassungen durch Apertur-Randeffekte und eine VSWR-Degradation an den äußeren Toren verhindert.
+
+HF-Abschirmung durch Aperturkopplung:
+Die berührungslose Speisung über kreuzförmige Koppelschlitze durch die durchgehende Massefläche bildet eine inhärente Schirmbarriere, die die Antennenapertur zuverlässig vor hochfrequenten Takt- und Rauschstörungen rückseitig montierter Strahlformungs-ICs (RFICs) schützt.
+
+<p align="center">
+  <img src="docs/images/antenna_stackup_exploded_view.jpg" width="550" alt="Explosionsdarstellung des Antennen-Leiterplattenaufbaus">
+  <br>
+  <em>Abb. 32. Explosionsdarstellung des Schichtaufbaus: Mikrostreifen-Speiseleitung, Massefläche mit Kopplungskreuz und Perforationsringen, Hauptstrahler und oberer parasitärer Resonator.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_dimensions_and_ground_margin.png" width="600" alt="Leiterplattenabmessungen und Masseflächenränder">
+  <br>
+  <em>Abb. 33. Leiterplatten-Layout der Antenne (90.00 x 89.00 mm): 8x8-Strahleranordnung mit schützenden Perforationsbarrieren und breiten Masseflächenrändern.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_model_ports.png" width="550" alt="3D-Modell des 8x8-Arrays mit 64 Toren">
+  <br>
+  <em>Abb. 34. Dreidimensionales Simulationsmodell des 8x8-Arrays in CST Studio Suite mit allen 64 voneinander unabhängigen Hohlleiter-Toren.</em>
+</p>
+
+### 2. Toranpassung im optimierten 8×8-Array (VSWR)
+Im Gegensatz zur vorläufigen Array-Simulation, bei der gegenseitige Verkopplung zu stark voneinander abweichenden Port-Impedanzen führte, weist das finale Array an allen Toren eng gebündelte VSWR-Kurven auf:
+
+Die Resonanzminima liegen im Bereich von 1.0 bis 1.2 in der Umgebung von 28.8 GHz.<br>
+Eine breitbandige Impedanzanpassung gemäß $\text{VSWR} < 2.0$ wird über den gesamten Bereich von 28.1 bis 29.7 GHz an allen 64 Toren durchgehend eingehalten.
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_vswr_ports.png" width="700" alt="VSWR an den Toren des finalen 8x8-Arrays">
+  <br>
+  <em>Abb. 35. VSWR-Frequenzverläufe an den Toren des optimierten 8x8-Arrays: gleichmäßige Anpassung ohne Verstimmung der Randtore.</em>
+</p>
+
+### 3. Erhalt der zirkularen Polarisation im gesamten Betriebsband
+Das Zusammenwirken der Masseflächen-Perforationsbarrieren und der sequentiellen Rotationsarchitektur unterdrückt parasitäre Kopplungsmoden zuverlässig. Über den gesamten Betriebskanal im Ka-Band verbleibt das Achsenverhältnis (Axial Ratio) sicher unter der 3.0-dB-Schwelle:
+
+Bei 28.0 GHz: Das Achsenverhältnis im Zenit beträgt 2.1 dB (vollständig wiederhergestellt gegenüber dem degradierten Wert von 5.3 dB im unkompensierten Array).<br>
+Bei 29.0 GHz: Das Achsenverhältnis im Zenit beträgt 1.6 dB (gegenüber 3.9 dB im unkompensierten Array).<br>
+Bei 30.0 GHz: Das Achsenverhältnis im Zenit erreicht herausragende 0.7 dB (gegenüber 2.6 dB mit stark eingeengtem Winkelbereich im unkompensierten Array).
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_axial_ratio_polar_28ghz.png" width="650" alt="Achsenverhältnis des finalen 8x8-Arrays bei 28 GHz">
+  <br>
+  <em>Abb. 36. Polardiagramm des Achsenverhältnisses des finalen 8x8-Arrays bei 28 GHz (AR im Zenit = 2.1 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_axial_ratio_polar_29ghz.png" width="650" alt="Achsenverhältnis des finalen 8x8-Arrays bei 29 GHz">
+  <br>
+  <em>Abb. 37. Polardiagramm des Achsenverhältnisses des finalen 8x8-Arrays bei 29 GHz (AR im Zenit = 1.6 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_axial_ratio_polar_30ghz.png" width="650" alt="Achsenverhältnis des finalen 8x8-Arrays bei 30 GHz">
+  <br>
+  <em>Abb. 38. Polardiagramm des Achsenverhältnisses des finalen 8x8-Arrays bei 30 GHz (AR im Zenit = 0.7 dB).</em>
+</p>
+
+### 4. Richtfaktor, Gewinn und Strahlungswirkungsgrad
+Bei gleichphasiger und gleichförmiger Belegung aller Elemente bei 29.0 GHz erzielt das Antennenarray eine hohe Apertureffizienz:
+
+Realisierter Gewinn (Realized Gain): 21.8 dBi (verbessert von 21.3 dBi).<br>
+Halbwertsbreite (HPBW): $10.0^\circ$.<br>
+Nebenzipfeldämpfung (SLL): $-12.3$ dB.<br>
+Strahlungswirkungsgrad: 93.5% ($-0.29$ dB).<br>
+Gesamtwirkungsgrad: 86.4% ($-0.63$ dB).
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_gain_polar_29ghz.png" width="650" alt="Gewinn des finalen 8x8-Arrays bei 29 GHz">
+  <br>
+  <em>Abb. 39. Polardiagramm des Antennengewinns des finalen 8x8-Arrays bei 29 GHz (Gain = 21.8 dBi, HPBW = 10.0°).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_final_3d_efield_29ghz.png" width="700" alt="3D E-Feld des finalen 8x8-Arrays bei 29 GHz">
+  <br>
+  <em>Abb. 40. Räumliches 3D-Fernfeld der elektrischen Feldstärke des finalen 8x8-Arrays bei 29 GHz (Emax = 395.5 V/m).</em>
+</p>
+
+### 5. Elektronische Strahlschwenkung im phasengesteuerten Array
+Zur Verifikation der Eignung für Phased-Array-Systeme (PAA) und aktiv elektronisch gescannte Gruppenantennen (AESA) wurden progressive lineare Phasenverschiebungen an den Elementen angelegt:
+
+Hauptstrahlrichtung $0^\circ$ (Zenit / Broadside):<br>
+Maximale elektrische Feldstärke: $E_{\text{max}} = 395$ V/m.<br>
+Halbwertsbreite: $\text{HPBW} = 9.4^\circ$.<br>
+Nebenzipfeldämpfung: $\text{SLL} = -5.8$ dB.
+
+Hauptstrahl geschwenkt auf $17^\circ$:<br>
+Maximale elektrische Feldstärke: $E_{\text{max}} = 391$ V/m.<br>
+Halbwertsbreite: $\text{HPBW} = 9.9^\circ$.<br>
+Nebenzipfeldämpfung: $\text{SLL} = -5.5$ dB.
+
+Hauptstrahl geschwenkt auf $33^\circ$:<br>
+Maximale elektrische Feldstärke: $E_{\text{max}} = 325$ V/m.<br>
+Halbwertsbreite: $\text{HPBW} = 11.7^\circ$.<br>
+Nebenzipfeldämpfung: $\text{SLL} = -6.5$ dB.
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_beam_0deg.png" width="650" alt="E-Feld-Richtdiagramm bei 0 Grad Schwenkwinkel">
+  <br>
+  <em>Abb. 41. Polardiagramm der E-Feldstärke bei 0° Hauptstrahlrichtung: Emax = 395 V/m, HPBW = 9.4°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_beam_17deg.png" width="650" alt="E-Feld-Richtdiagramm geschwenkt auf 17 Grad">
+  <br>
+  <em>Abb. 42. Polardiagramm der E-Feldstärke geschwenkt auf 17°: Emax = 391 V/m, HPBW = 9.9°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_steered_beam_33deg.png" width="650" alt="E-Feld-Richtdiagramm geschwenkt auf 33 Grad">
+  <br>
+  <em>Abb. 43. Polardiagramm der E-Feldstärke geschwenkt auf 33°: Emax = 325 V/m, HPBW = 11.7°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_steered_beam_0deg.png" width="700" alt="3D-Strahlschwenkung bei 0 Grad">
+  <br>
+  <em>Abb. 44. Räumliches 3D-Strahlungsdiagramm bei 0° Normalenrichtung.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_steered_beam_17deg.png" width="700" alt="3D-Strahlschwenkung bei 17 Grad">
+  <br>
+  <em>Abb. 45. Räumliches 3D-Strahlungsdiagramm elektronisch geschwenkt auf 17°.</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_steered_beam_33deg.png" width="700" alt="3D-Strahlschwenkung bei 33 Grad">
+  <br>
+  <em>Abb. 46. Räumliches 3D-Strahlungsdiagramm elektronisch geschwenkt auf 33°.</em>
 </p>
 
 ## Lizenz
