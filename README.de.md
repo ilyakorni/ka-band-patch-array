@@ -15,6 +15,7 @@ Dieses Repository dokumentiert die Auslegung, die analytische Berechnung, CAD-Mo
 [Ergebnisse der elektromagnetischen Simulation des Einzelstrahlers](#ergebnisse-der-elektromagnetischen-simulation-des-einzelstrahlers)<br>
 [Untersuchung des 8x8-Antennenarrays und Oberflächenwelleneffekte](#untersuchung-des-8x8-antennenarrays-und-oberflächenwelleneffekte)<br>
 [Unterdrückung von Oberflächenwellen durch Masseflächen-Perforation und Neujustierung des Strahlers](#unterdrückung-von-oberflächenwellen-durch-masseflächen-perforation-und-neujustierung-des-strahlers)<br>
+[2×2-Teilarray mit sequentieller Phasen- und Raumrotation](#22-teilarray-mit-sequentieller-phasen--und-raumrotation)<br>
 [Lizenz](#lizenz)
 
 ## Projektübersicht
@@ -28,7 +29,8 @@ Anregungsmechanismus: Berührungslose elektromagnetische Aperturkopplung über e
 Anpassung: Zentrierte leerlaufende Lambda/Viertel-Anpassungsleitung ($\lambda_g/4$ Tuning Stub), platziert unmittelbar über dem Aperturkreuz zur Kompensation der Schlitzreaktanz.<br>
 Zirkulare Polarisation: Diagonale Eckenabschrägungen (Corner Truncation, $45^\circ$) auf den Resonatorelementen zur Anregung zweier orthogonaler Moden ($TM_{10}$ und $TM_{01}$) in Quadratur ($90^\circ$ Phasenverschiebung).<br>
 Bandbreitenvergrößerung: Ein über dem Hauptstrahler angeordneter parasitärer Resonator zur Erzeugung eines doppelresonanten Frequenzverhaltens im Bereich 28.0–30.0 GHz.<br>
-Unterdrückung von Oberflächenwellen: Perforationen (Bohrungen) in der Massefläche um jeden Strahler zur Reflexion dielektrischer Oberflächenwellen und Minimierung der gegenseitigen Verkopplung.
+Unterdrückung von Oberflächenwellen: Perforationen (Bohrungen) in der Massefläche um jeden Strahler zur Reflexion dielektrischer Oberflächenwellen und Minimierung der gegenseitigen Verkopplung.<br>
+Breitbandige zirkulare Polarisation im Array: $2 \times 2$-Teilarray-Architektur mit sequentieller Drehung ($0^\circ, 90^\circ, 180^\circ, 270^\circ$) zur Kompensation parasitärer Moden und drastischen Vergrößerung der Achsenverhältnis-Bandbreite.
 
 ## Projektstruktur
 
@@ -69,12 +71,19 @@ Die Struktur des Repositories gliedert sich wie folgt:
 │       ├── retuned_quarter_wave_transformer.png # Länge des Lambda/Viertel-Transformators (1.738 mm)
 │       ├── retuned_s11_band_edge_lower.png    # Nachjustierte untere Grenzfrequenz S11 (27.927 GHz)
 │       ├── retuned_s11_band_edge_upper.png    # Nachjustierte obere Grenzfrequenz S11 (29.711 GHz)
+│       ├── retuned_single_patch_3d_directivity_29ghz.png # 3D-Richtfaktor des nachjustierten Einzelstrahlers (7.47 dBi)
 │       ├── retuned_vswr.png                   # Nachjustiertes VSWR (1.30 bei 29.0 GHz)
 │       ├── simulation_s11_band_edge_lower.png # Ursprüngliche untere Grenzfrequenz S11 (27.94 GHz)
 │       ├── simulation_s11_band_edge_upper.png # Ursprüngliche obere Grenzfrequenz S11 (29.58 GHz)
 │       ├── simulation_s_parameters_s11.png    # Frequenzverlauf des Reflexionsfaktors S11 des Einzelstrahlers
 │       ├── simulation_vswr.png                # Stehwellenverhältnis (VSWR) des Einzelstrahlers
-│       └── simulation_z_parameters.png        # Eingangsimpedanz Z11 (Real- und Imaginärteil)
+│       ├── simulation_z_parameters.png        # Eingangsimpedanz Z11 (Real- und Imaginärteil)
+│       ├── subarray_2x2_3d_gain_29ghz.png     # 3D-Antennengewinn des 2x2-Teilarrays (10.60 dBi)
+│       ├── subarray_2x2_axial_ratio_polar_28ghz.png # Achsenverhältnis des 2x2-Teilarrays bei 28 GHz (0.8 dB)
+│       ├── subarray_2x2_axial_ratio_polar_29ghz.png # Achsenverhältnis des 2x2-Teilarrays bei 29 GHz (1.8 dB)
+│       ├── subarray_2x2_axial_ratio_polar_30ghz.png # Achsenverhältnis des 2x2-Teilarrays bei 30 GHz (1.6 dB)
+│       ├── subarray_2x2_sequential_rotation_geometry.png # 2x2-Teilarray-Geometrie mit 90°-Drehung
+│       └── subarray_2x2_vswr_ports.png        # VSWR an den Ports des 2x2-Teilarrays
 └── simulation/
     └── cp_stacked_patch_antenna_29ghz.cst     # Elektromagnetisches 3D-Simulationsmodell (CST Studio Suite)
 ```
@@ -356,6 +365,87 @@ Das Achsenverhältnis unterschreitet nun wieder die kritische Grenze von 3.0 dB,
   <img src="docs/images/retuned_axial_ratio_polar_29ghz.png" width="650" alt="Achsenverhältnis nach Neujustierung bei 29 GHz">
   <br>
   <em>Abb. 24. Polardiagramm des Achsenverhältnisses bei 29 GHz: Wiederherstellung auf 2.8 dB (< 3.0 dB).</em>
+</p>
+
+Räumliche Richtcharakteristik und Wirkungsgrad des optimierten Einzelstrahlers:
+Der Richtfaktor (Directivity) erreicht 7.47 dBi bei 29.0 GHz.<br>
+Der Strahlungswirkungsgrad (Radiation Efficiency) liegt bei 94.7% ($-0.236$ dB).<br>
+Der Gesamtwirkungsgrad (Total Efficiency) beträgt 93.1% ($-0.313$ dB).
+
+<p align="center">
+  <img src="docs/images/retuned_single_patch_3d_directivity_29ghz.png" width="700" alt="3D Richtfaktor des optimierten Einzelstrahlers">
+  <br>
+  <em>Abb. 25. Räumliches 3D-Fernfeld-Richtdiagramm des optimierten Einzelstrahlers bei 29 GHz (Directivity = 7.47 dBi).</em>
+</p>
+
+## 2×2-Teilarray mit sequentieller Phasen- und Raumrotation
+
+Zur fundamentalen Beseitigung der durch Verkopplung und Substrat-Oberflächenwellen verursachten Degradation der zirkularen Polarisation in großen planaren Arrays wurden die optimierten Strahler zu einem $2 \times 2$-Teilarray nach der Sequential Rotation-Methode zusammengefasst.
+
+### 1. Architektur und Aufbau des 2×2-Teilarrays
+In der $2 \times 2$-Zelle wird jedes benachbarte Element räumlich um $90^\circ$ entlang der Achse normal zur Apertur gedreht ($0^\circ, 90^\circ, 180^\circ, 270^\circ$). Die Speisephasen der Tore werden mit entsprechenden Quadratur-Phasenverschiebungen angesteuert ($0^\circ, 90^\circ, 180^\circ, 270^\circ$), um ein kohärentes zirkulares Drehfeld zu erzeugen.<br>
+Um jedes Einzelelement bleibt der Schutzring aus Masseflächen-Perforationen zur Abschirmung dielektrischer Oberflächenwellen erhalten.
+
+Vorteile der sequentiellen Rotation:
+Gegenseitige Auslöschung parasitärer kreuzpolarisierter Raummoden höherer Ordnung.<br>
+Kompensation reflektierter Wellen an den Toren des Speisenetzwerks, was die Eingangsanpassung signifikant verbessert.<br>
+Drastische Erweiterung der Bandbreite mit hochreiner zirkularer Polarisation ($\text{AR} < 3$ dB).
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_sequential_rotation_geometry.png" width="550" alt="Geometrie des 2x2-Teilarrays mit sequentieller Drehung">
+  <br>
+  <em>Abb. 26. 3D-Topologie des 2x2-Teilarrays: sequentielle 90°-Raumdrehung der Elemente und Masseleiter-Perforationsbarrieren.</em>
+</p>
+
+### 2. Port-Anpassung des 2×2-Teilarrays
+Die Stehwellenverhältnisse (VSWR) an allen vier unabhängigen Toren (VSWR1, VSWR2, VSWR3, VSWR4) weisen eine hohe Symmetrie und hervorragende Anpassung auf:
+
+Die Resonanzminima an den Toren erreichen Werte zwischen 1.05 und 1.22 im Frequenzintervall 29.1–29.4 GHz.<br>
+Die breitbandige Anpassung gemäß $\text{VSWR} < 2.0$ überstreicht bei allen vier Kanälen den Bereich von 28.4 bis 30.0 GHz.
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_vswr_ports.png" width="700" alt="VSWR an den Ports des 2x2-Teilarrays">
+  <br>
+  <em>Abb. 27. VSWR-Frequenzverläufe an allen Toren des 2x2-Teilarrays (Minima 1.05–1.22).</em>
+</p>
+
+### 3. Abstrahl- und Gewinncharakteristik
+Bei Superposition der vier Kanäle mit sequentieller Phasenbelegung $[1\angle 0^\circ, 1\angle 90^\circ, 1\angle 180^\circ, 1\angle 270^\circ]$:
+
+Der Antennengewinn (Realized Gain) bei 29.0 GHz erreicht 10.60 dBi.<br>
+Der Strahlungswirkungsgrad beträgt 94.2% ($-0.259$ dB).<br>
+Der Gesamtwirkungsgrad liegt bei 91.4% ($-0.391$ dB).<br>
+Das Richtdiagramm bildet eine rotationssymmetrische Hauptkeule mit hoher Polarisationstreue.
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_3d_gain_29ghz.png" width="700" alt="3D-Gewinndiagramm des 2x2-Teilarrays bei 29 GHz">
+  <br>
+  <em>Abb. 28. Räumliches 3D-Gewinndiagramm des 2x2-Teilarrays bei 29 GHz (Gain = 10.60 dBi).</em>
+</p>
+
+### 4. Wesentliche Verbesserung der zirkularen Polarisation (Axial Ratio)
+Die sequentielle Phasen- und Raumrotation beseitigt die Polarisationsdegradation im Array vollständig und liefert hervorragende Achsenverhältnisse im gesamten Frequenzband:
+
+Bei 28.0 GHz: Das Achsenverhältnis in Normalenrichtung ($\theta = 0^\circ$) sinkt auf bemerkenswerte 0.8 dB (im unkompensierten 8x8-Array lag der Wert bei 5.3 dB). Der Winkelbereich mit $\text{AR} < 3$ dB umfasst $|\theta| \le 22^\circ$.<br>
+Bei 29.0 GHz: Das axiale Verhältnis im Zenit beträgt 1.8 dB mit einem weiten 3-dB-Winkelbereich von $|\theta| \le 18^\circ$.<br>
+Bei 30.0 GHz: Das axiale Verhältnis im Zenit liegt bei 1.6 dB (während im regulären 8x8-Array der Bereich auf $< 2^\circ$ kollabierte), mit einem stabilen Polarisationssektor von $|\theta| \le 25^\circ$.
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_axial_ratio_polar_28ghz.png" width="650" alt="Achsenverhältnis des 2x2-Teilarrays bei 28 GHz">
+  <br>
+  <em>Abb. 29. Polardiagramm des Achsenverhältnisses des 2x2-Teilarrays bei 28 GHz (AR im Zenit 0.8 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_axial_ratio_polar_29ghz.png" width="650" alt="Achsenverhältnis des 2x2-Teilarrays bei 29 GHz">
+  <br>
+  <em>Abb. 30. Polardiagramm des Achsenverhältnisses des 2x2-Teilarrays bei 29 GHz (AR im Zenit 1.8 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_axial_ratio_polar_30ghz.png" width="650" alt="Achsenverhältnis des 2x2-Teilarrays bei 30 GHz">
+  <br>
+  <em>Abb. 31. Polardiagramm des Achsenverhältnisses des 2x2-Teilarrays bei 30 GHz (AR im Zenit 1.6 dB).</em>
 </p>
 
 ## Lizenz

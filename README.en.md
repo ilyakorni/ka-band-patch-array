@@ -15,6 +15,7 @@ This repository contains the design, analytical synthesis, CAD assets, and full-
 [Numerical Simulation Results for Single Element](#numerical-simulation-results-for-single-element)<br>
 [8x8 Antenna Array Investigation and Surface Wave Effects](#8x8-antenna-array-investigation-and-surface-wave-effects)<br>
 [Surface Wave Suppression via Ground Plane Perforations and Element Retuning](#surface-wave-suppression-via-ground-plane-perforations-and-element-retuning)<br>
+[2×2 Sequentially Rotated Sub-Array Architecture](#22-sequentially-rotated-sub-array-architecture)<br>
 [License](#license)
 
 ## Overview
@@ -26,9 +27,10 @@ Key design features:
 Topology: Multilayer stacked microstrip patch antenna with parasitic resonance.<br>
 Excitation: Non-contact aperture electromagnetic coupling through a cross-slot in the ground plane fed by a microstrip line.<br>
 Impedance Matching: Centered open-circuited quarter-wave ($\lambda_g/4$) tuning stub positioned directly over the aperture cross to compensate for slot reactance.<br>
-Circular Polarization: Corner-truncated square patch geometry ($45^\circ$ chamfers) on radiating elements generating degenerate orthogonal modes ($TM_{10}$ and $TM_{01}$) in quadrature ($90^\circ$ phase shift).<br>
+Circular Polarization: Corner-truncated square patch geometry ($45^\circ$ chamfers) on radiating elements generating degenerate orthogonal modes ($TM_{10}$ and TM_{01}) in quadrature ($90^\circ$ phase shift).<br>
 Bandwidth Expansion: Upper parasitic radiating patch coupled electromagnetically to the driven patch, providing a dual-resonance frequency response over the 28.0–30.0 GHz band.<br>
-Surface Wave Mitigation: Ground plane perforations encircling radiators to generate discontinuities that reflect substrate surface waves and mitigate inter-element mutual coupling.
+Surface Wave Mitigation: Ground plane perforations encircling radiators to generate discontinuities that reflect substrate surface waves and mitigate inter-element mutual coupling.<br>
+Ultra-Wideband CP Array Performance: $2 \times 2$ sequential rotation sub-array topology ($0^\circ, 90^\circ, 180^\circ, 270^\circ$) providing mutual cancellation of cross-polarized fields and exceptional axial ratio bandwidth.
 
 ## Project Structure
 
@@ -69,12 +71,19 @@ The project files are organized as follows:
 │       ├── retuned_quarter_wave_transformer.png # Retuned quarter-wave transformer length (1.738 mm)
 │       ├── retuned_s11_band_edge_lower.png    # Retuned lower return loss band edge (27.927 GHz)
 │       ├── retuned_s11_band_edge_upper.png    # Retuned upper return loss band edge (29.711 GHz)
+│       ├── retuned_single_patch_3d_directivity_29ghz.png # 3D directivity of retuned patch (7.47 dBi)
 │       ├── retuned_vswr.png                   # Retuned VSWR response (1.30 at 29.0 GHz)
 │       ├── simulation_s11_band_edge_lower.png # Initial lower -10 dB return loss band edge (27.94 GHz)
 │       ├── simulation_s11_band_edge_upper.png # Initial upper -10 dB return loss band edge (29.58 GHz)
 │       ├── simulation_s_parameters_s11.png    # Initial reflection coefficient S11 frequency response
 │       ├── simulation_vswr.png                # Initial VSWR plot of single element
-│       └── simulation_z_parameters.png        # Initial input impedance Z11 plot
+│       ├── simulation_z_parameters.png        # Initial input impedance Z11 plot
+│       ├── subarray_2x2_3d_gain_29ghz.png     # 3D Gain pattern of 2x2 sub-array (10.60 dBi)
+│       ├── subarray_2x2_axial_ratio_polar_28ghz.png # Axial Ratio cut of 2x2 sub-array at 28 GHz (0.8 dB)
+│       ├── subarray_2x2_axial_ratio_polar_29ghz.png # Axial Ratio cut of 2x2 sub-array at 29 GHz (1.8 dB)
+│       ├── subarray_2x2_axial_ratio_polar_30ghz.png # Axial Ratio cut of 2x2 sub-array at 30 GHz (1.6 dB)
+│       ├── subarray_2x2_sequential_rotation_geometry.png # 2x2 sub-array 90° rotation geometry
+│       └── subarray_2x2_vswr_ports.png        # Port VSWR curves of 2x2 sub-array
 └── simulation/
     └── cp_stacked_patch_antenna_29ghz.cst     # Full-wave 3D electromagnetic model (CST Studio Suite)
 ```
@@ -356,6 +365,87 @@ The axial ratio value successfully returned below the 3.0 dB threshold across a 
   <img src="docs/images/retuned_axial_ratio_polar_29ghz.png" width="650" alt="Retuned Axial Ratio at 29 GHz">
   <br>
   <em>Figure 24. Farfield Axial Ratio polar cut at 29 GHz: successful restoration to 2.8 dB (< 3.0 dB).</em>
+</p>
+
+Farfield Directivity and Efficiency of Optimized Single Radiator:
+Directivity evaluates to 7.47 dBi at 29.0 GHz.<br>
+Radiation Efficiency reaches 94.7% ($-0.236$ dB).<br>
+Total Efficiency reaches 93.1% ($-0.313$ dB).
+
+<p align="center">
+  <img src="docs/images/retuned_single_patch_3d_directivity_29ghz.png" width="700" alt="3D Directivity of Retuned Single Element">
+  <br>
+  <em>Figure 25. 3D farfield Directivity radiation pattern of retuned single patch at 29 GHz (7.47 dBi).</em>
+</p>
+
+## 2×2 Sequentially Rotated Sub-Array Architecture
+
+To fundamentally eliminate the circular polarization degradation caused by mutual coupling and dielectric surface waves in large-scale planar arrays, the optimized radiators are grouped into a $2 \times 2$ sub-array utilizing the Sequential Rotation Technique.
+
+### 1. Sub-Array Architecture and Physical Layout
+In the $2 \times 2$ cluster, each adjacent patch is physically rotated by $90^\circ$ around its boresight normal axis ($0^\circ, 90^\circ, 180^\circ, 270^\circ$). The feed excitation phases are stepped by corresponding quadrature offsets ($0^\circ, 90^\circ, 180^\circ, 270^\circ$) to synthesize coherent circular polarization.<br>
+Each individual element maintains its defensive perimeter of ground plane perforations to prevent substrate surface-wave leakage.
+
+Key benefits of sequential rotation:
+Mutual cancellation of higher-order cross-polarized spatial radiation modes.<br>
+Cancellation of reflected waves from element feed ports at the corporate feed network, significantly improving overall input match.<br>
+Extreme broadening of the high-purity circular polarization bandwidth ($\text{AR} < 3$ dB).
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_sequential_rotation_geometry.png" width="550" alt="2x2 Sequentially Rotated Sub-Array Geometry">
+  <br>
+  <em>Figure 26. 3D geometry of 2x2 sub-array: 90° sequential spatial rotation and perforated ground isolation fences.</em>
+</p>
+
+### 2. Port Matching Characteristics of 2×2 Sub-Array
+Simulated VSWR responses across all four independent ports (VSWR1, VSWR2, VSWR3, VSWR4) show excellent symmetry and impedance matching:
+
+Resonance minima at the ports range between 1.05 and 1.22 in the 29.1–29.4 GHz frequency interval.<br>
+Broadband impedance matching meeting the $\text{VSWR} < 2.0$ criterion covers 28.4 to 30.0 GHz across all four feed channels.
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_vswr_ports.png" width="700" alt="Port VSWR Curves of 2x2 Sub-Array">
+  <br>
+  <em>Figure 27. VSWR frequency response across all four ports of the 2x2 sub-array (minima 1.05–1.22).</em>
+</p>
+
+### 3. Radiation Pattern and Gain Performance
+Superposition with sequential phase excitations $[1\angle 0^\circ, 1\angle 90^\circ, 1\angle 180^\circ, 1\angle 270^\circ]$ yields:
+
+Realized Gain at the center frequency of 29.0 GHz reaches 10.60 dBi.<br>
+Radiation Efficiency equals 94.2% ($-0.259$ dB).<br>
+Total Efficiency evaluates to 91.4% ($-0.391$ dB).<br>
+The synthesized beam exhibits a highly symmetric main lobe with low sidelobes and circular pattern symmetry.
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_3d_gain_29ghz.png" width="700" alt="3D Gain Pattern of 2x2 Sub-Array at 29 GHz">
+  <br>
+  <em>Figure 28. 3D Farfield Gain pattern of 2x2 sub-array at 29 GHz (Gain = 10.60 dBi).</em>
+</p>
+
+### 4. Radical Improvement in Circular Polarization (Axial Ratio)
+Sequential phase rotation completely resolves the polarization degradation observed in the full array, maintaining superior axial ratio across the entire operational band:
+
+At 28.0 GHz: Broadside axial ratio ($\theta = 0^\circ$) drops to an outstanding 0.8 dB (compared to 5.3 dB in the standard 8x8 array). The high-purity CP sector ($\text{AR} < 3$ dB) spans $|\theta| \le 22^\circ$.<br>
+At 29.0 GHz: Broadside axial ratio evaluates to 1.8 dB, with a broad 3 dB beamwidth extending over $|\theta| \le 18^\circ$.<br>
+At 30.0 GHz: Broadside axial ratio evaluates to 1.6 dB (where the standard 8x8 array collapsed to $< 2^\circ$), maintaining a wide CP angular sector of $|\theta| \le 25^\circ$.
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_axial_ratio_polar_28ghz.png" width="650" alt="Axial Ratio of 2x2 Sub-Array at 28 GHz">
+  <br>
+  <em>Figure 29. Polar Axial Ratio cut of 2x2 sub-array at 28 GHz (broadside AR = 0.8 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_axial_ratio_polar_29ghz.png" width="650" alt="Axial Ratio of 2x2 Sub-Array at 29 GHz">
+  <br>
+  <em>Figure 30. Polar Axial Ratio cut of 2x2 sub-array at 29 GHz (broadside AR = 1.8 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/subarray_2x2_axial_ratio_polar_30ghz.png" width="650" alt="Axial Ratio of 2x2 Sub-Array at 30 GHz">
+  <br>
+  <em>Figure 31. Polar Axial Ratio cut of 2x2 sub-array at 30 GHz (broadside AR = 1.6 dB).</em>
 </p>
 
 ## License
