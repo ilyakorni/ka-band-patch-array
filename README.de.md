@@ -11,8 +11,9 @@ Dieses Repository dokumentiert die Auslegung, die analytische Berechnung, CAD-Mo
 [Projektübersicht](#projektübersicht)<br>
 [Projektstruktur](#projektstruktur)<br>
 [Analytische Berechnung](#analytische-berechnung)<br>
-[3D-Modellierung und Optimierung](#3d-modellierung-und-optimierung)<br>
-[Ergebnisse der elektromagnetischen Simulation](#ergebnisse-der-elektromagnetischen-simulation)<br>
+[3D-Modellierung und Optimierung des Einzelstrahlers](#3d-modellierung-und-optimierung-des-einzelstrahlers)<br>
+[Ergebnisse der elektromagnetischen Simulation des Einzelstrahlers](#ergebnisse-der-elektromagnetischen-simulation-des-einzelstrahlers)<br>
+[Untersuchung des 8x8-Antennenarrays und Oberflächenwelleneffekte](#untersuchung-des-8x8-antennenarrays-und-oberflächenwelleneffekte)<br>
 [Lizenz](#lizenz)
 
 ## Projektübersicht
@@ -48,14 +49,21 @@ Die Struktur des Repositories gliedert sich wie folgt:
 │   └── patch_antenna_analytical_calc.xmcd     # Mathematische Auslegung und Leitungsberechnung (Mathcad 14)
 ├── docs/
 │   └── images/
-│       ├── axial_ratio_3d_pattern_29ghz.png   # 3D-Diagramm des Achsenverhältnisses (Axial Ratio)
-│       ├── axial_ratio_polar_29ghz.png        # Polardiagramm des Achsenverhältnisses (Schnitt Phi=90°)
+│       ├── array_8x8_3d_directivity_29ghz.png # 3D-Richtfaktor-Diagramm des 8x8-Arrays (21.63 dBi)
+│       ├── array_8x8_3d_efield_29ghz.png      # 3D-E-Feldverteilung des 8x8-Arrays bei 29 GHz
+│       ├── array_8x8_axial_ratio_polar_28ghz.png # Polardiagramm des Achsenverhältnisses des 8x8-Arrays (28 GHz)
+│       ├── array_8x8_axial_ratio_polar_29ghz.png # Polardiagramm des Achsenverhältnisses des 8x8-Arrays (29 GHz)
+│       ├── array_8x8_axial_ratio_polar_30ghz.png # Polardiagramm des Achsenverhältnisses des 8x8-Arrays (30 GHz)
+│       ├── array_8x8_gain_polar_29ghz.png     # Gewinndiagramm des 8x8-Arrays (Gain = 21.3 dBi)
+│       ├── array_8x8_vswr_ports.png           # Stehwellenverhältnis an den Ports des 8x8-Arrays
+│       ├── axial_ratio_3d_pattern_29ghz.png   # 3D-Diagramm des Achsenverhältnisses des Einzelstrahlers
+│       ├── axial_ratio_polar_29ghz.png        # Polardiagramm des Achsenverhältnisses des Einzelstrahlers
 │       ├── parasitic_patch_geometry.png       # Geometrische Abmessungen des oberen parasitären Resonators
 │       ├── patch_truncation_geometry.png      # Geometrische Abmessungen des unteren Resonators und Abschrägungen
 │       ├── simulation_s11_band_edge_lower.png # Untere Grenzfrequenz für S11 = -10 dB (27.94 GHz)
 │       ├── simulation_s11_band_edge_upper.png # Obere Grenzfrequenz für S11 = -10 dB (29.58 GHz)
-│       ├── simulation_s_parameters_s11.png    # Frequenzverlauf des Reflexionsfaktors S11
-│       ├── simulation_vswr.png                # Stehwellenverhältnis (VSWR)
+│       ├── simulation_s_parameters_s11.png    # Frequenzverlauf des Reflexionsfaktors S11 des Einzelstrahlers
+│       ├── simulation_vswr.png                # Stehwellenverhältnis (VSWR) des Einzelstrahlers
 │       └── simulation_z_parameters.png        # Eingangsimpedanz Z11 (Real- und Imaginärteil)
 └── simulation/
     └── cp_stacked_patch_antenna_29ghz.cst     # Elektromagnetisches 3D-Simulationsmodell (CST Studio Suite)
@@ -93,7 +101,7 @@ Lambda/Viertel-Anpassungsstichleitung: Länge $L_t = \lambda_g / 4 \approx 1.83$
   <em>Abb. 1. Layout des quadratischen unteren Resonators: Kantenlänge 2.65 mm, Eckenabschrägung 0.35 mm.</em>
 </p>
 
-## 3D-Modellierung und Optimierung
+## 3D-Modellierung und Optimierung des Einzelstrahlers
 
 Die numerische elektromagnetische Simulation und Optimierung wurden in CST Studio Suite durchgeführt ([cp_stacked_patch_antenna_29ghz.cst](simulation/cp_stacked_patch_antenna_29ghz.cst)). Der iterative Optimierungsprozess umfasste folgende Schritte:
 
@@ -122,10 +130,10 @@ Die Resonatorkopplung erweitert die Anpassungsbandbreite ($S_{11} < -10$ dB) sow
 <p align="center">
   <img src="docs/images/axial_ratio_3d_pattern_29ghz.png" width="650" alt="3D-Modell und räumliches Achsenverhältnis">
   <br>
-  <em>Abb. 3. 3D-Simulationsmodell und räumliche Verteilung des Achsenverhältnisses.</em>
+  <em>Abb. 3. 3D-Simulationsmodell des Einzelstrahlers und räumliche Verteilung des Achsenverhältnisses.</em>
 </p>
 
-## Ergebnisse der elektromagnetischen Simulation
+## Ergebnisse der elektromagnetischen Simulation des Einzelstrahlers
 
 ### 1. Reflexionsfaktor ($S_{11}$) und Anpassungsbandbreite
 Im Breitbandbereich von 28.0–30.0 GHz weist die Antenne eine zuverlässige Anpassung auf.<br>
@@ -162,7 +170,7 @@ Bei 29.0 GHz liegt das Stehwellenverhältnis bei 1.56. Im gesamten Betriebsband 
 <p align="center">
   <img src="docs/images/simulation_vswr.png" width="700" alt="Stehwellenverhältnis VSWR">
   <br>
-  <em>Abb. 7. Frequenzverlauf des Stehwellenverhältnisses (VSWR).</em>
+  <em>Abb. 7. Frequenzverlauf des Stehwellenverhältnisses (VSWR) des Einzelstrahlers.</em>
 </p>
 
 ### 3. Eingangsimpedanz ($Z_{11}$)
@@ -182,6 +190,81 @@ In Hauptstrahlrichtung ($\theta = 0^\circ$) beträgt das Achsenverhältnis bei 2
   <br>
   <em>Abb. 9. Polardiagramm des Achsenverhältnisses (Schnitt Phi=90°) bei 29 GHz.</em>
 </p>
+
+## Untersuchung des 8x8-Antennenarrays und Oberflächenwelleneffekte
+
+Zur Erhöhung des Antennengewinns und Bündelung der Richtcharakteristik wurde ein planares $8 \times 8$-Array aus 64 gestapelten Patch-Elementen aufgebaut. Bei der Optimierung des Elementabstands zur Maximierung des Gewinns und des Abtastbereichs trat der physikalische Effekt von Substrat-Oberflächenwellen und starker Verkopplung in den Vordergrund.
+
+### 1. Richtcharakteristik des 8x8-Arrays
+Bei 29.0 GHz formt das Array eine hochbündelnde Richtkeule (Pencil Beam) in Normalenrichtung:
+
+Richtfaktor (Directivity): 21.63 dBi in Broadside-Richtung ($\theta = 0^\circ$).<br>
+Realisierter Gewinn (Gain): 21.3 dBi in der Schnittebene $\Phi = 90^\circ$.<br>
+Halbwertsbreite (HPBW, 3 dB): $9.6^\circ$.<br>
+Nebenzipfeldämpfung (SLL): $-10.0$ dB.<br>
+Strahlungswirkungsgrad: 92.9% ($-0.32$ dB), Gesamtwirkungsgrad: 85.6% ($-0.68$ dB).<br>
+Maximales Fernfeld-E-Feld: $E_{\max} = 408.6$ V/m bei 1 m Abstand.
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_directivity_29ghz.png" width="650" alt="3D-Richtfaktor 8x8-Array">
+  <br>
+  <em>Abb. 10. 3D-Fernfeld-Richtfaktor des 8x8-Arrays bei 29 GHz (Spitzenwert 21.63 dBi).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_gain_polar_29ghz.png" width="650" alt="Polardiagramm Gewinn 8x8-Array">
+  <br>
+  <em>Abb. 11. Polardiagramm des Antennengewinns des 8x8-Arrays in der Ebene Phi=90° (Gain = 21.3 dBi, Keulenbreite 9.6°).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_3d_efield_29ghz.png" width="650" alt="3D-E-Feld 8x8-Array">
+  <br>
+  <em>Abb. 12. 3D-Feldverteilung der elektrischen Feldstärke des 8x8-Arrays bei 29 GHz.</em>
+</p>
+
+### 2. Elementverkopplung und Resonanzverschiebung an den Ports (VSWR)
+In dem durchgehenden dielektrischen Substrat angeregte Oberflächenwellen rufen eine signifikante parasitäre Verkopplung zwischen den Nachbarstrahlern hervor. Da sich Innen-, Rand- und Eckelemente in unterschiedlichen Kopplungsumgebungen befinden, kommt es zu einer Streuung der aktiven Eingangsimpedanzen:
+
+Die Resonanzfrequenzen der einzelnen Ports fächern sich im Bereich 28.5–29.8 GHz auf.<br>
+Das Stehwellenverhältnis bleibt in akzeptablen Grenzen (1.1 bis 1.7 an den Minima), die Kurven weichen jedoch voneinander ab.
+
+<p align="center">
+  <img src="docs/images/array_8x8_vswr_ports.png" width="700" alt="VSWR an den Ports des 8x8-Arrays">
+  <br>
+  <em>Abb. 13. Frequenzverlauf des VSWR an verschiedenen Ports des 8x8-Arrays infolge von Verkopplungseffekten.</em>
+</p>
+
+### 3. Degradation der zirkularen Polarisation durch Oberflächenwellen
+Die gravierendste Auswirkung der dielektrischen Oberflächenwellen ist die Zerstörung der zirkularen Polarisation im Arrayverbund:
+
+Die zirkulare Polarisation im Einzelelement basiert auf dem exakten Gleichgewicht zweier orthogonaler Moden mit $90^\circ$ Phasenverschiebung.<br>
+Im $8 \times 8$-Array induzieren die gekoppelten Oberflächenwellen Sekundärströme mit nichtquadraturbehafteten Phasenverschiebungen auf benachbarten Patches.<br>
+Dadurch verschlechtert sich das Achsenverhältnis (Axial Ratio) über das gesamte Band drastisch:
+
+Bei 28.0 GHz verschlechtert sich das Achsenverhältnis in Normalenrichtung auf 5.3 dB (Übergang zu ausgeprägter elliptischer Polarisation).<br>
+Bei 29.0 GHz liegt das Achsenverhältnis bei 3.9 dB und überschreitet somit die 3.0-dB-Schwelle für zirkulare Polarisation.<br>
+Bei 30.0 GHz verbleibt das Achsenverhältnis lediglich in einem extrem schmalen Winkelbereich ($< 2^\circ$) bei 2.6 dB und steigt außerhalb steil an.
+
+<p align="center">
+  <img src="docs/images/array_8x8_axial_ratio_polar_28ghz.png" width="650" alt="Achsenverhältnis 8x8-Array bei 28 GHz">
+  <br>
+  <em>Abb. 14. Polardiagramm des Achsenverhältnisses des 8x8-Arrays bei 28 GHz (Degradation auf 5.3 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_axial_ratio_polar_29ghz.png" width="650" alt="Achsenverhältnis 8x8-Array bei 29 GHz">
+  <br>
+  <em>Abb. 15. Polardiagramm des Achsenverhältnisses des 8x8-Arrays bei 29 GHz (Degradation auf 3.9 dB).</em>
+</p>
+
+<p align="center">
+  <img src="docs/images/array_8x8_axial_ratio_polar_30ghz.png" width="650" alt="Achsenverhältnis 8x8-Array bei 30 GHz">
+  <br>
+  <em>Abb. 16. Polardiagramm des Achsenverhältnisses des 8x8-Arrays bei 30 GHz.</em>
+</p>
+
+Diese Untersuchung verdeutlicht, dass zur Erhaltung zirkularer Polarisation in Millimeterwellen-Arrays Maßnahmen zur Unterdrückung von Oberflächenwellen (wie Entkopplungsgräben im Substrat oder EBG-Strukturen) zwingend erforderlich sind.
 
 ## Lizenz
 
