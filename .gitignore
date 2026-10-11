@@ -1,0 +1,51 @@
+# Operating System files (macOS, Windows, Linux)
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+[Dd]esktop.ini
+
+# CST Studio Suite transient and generated files
+# Keep only the primary project archive (*.cst), exclude large solve caches and logs
+Result/
+Run/
+Cache/
+Temp/
+Model/
+Subprojects/
+*.cst.bak
+*.cst.sub/
+*.cst_bak/
+*.bak
+*.tmp
+*.swp
+*.log
+
+# Altium Designer build artifacts, history and temporary outputs
+History/
+__Previews/
+Project\ Outputs*/
+ProjectOutputs/
+*.Logs/
+*.PrjPcbStructure
+*.Drc
+*.htm
+*.Dat
+*.REP
+*.Zip
+!/cad/*.zip
+
+# Mathcad temporary / backup files
+*.xmcd.bak
+*.xmcdz.bak
+~$*
+
+# IDE and Text Editors
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
