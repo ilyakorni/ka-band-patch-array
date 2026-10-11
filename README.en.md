@@ -2,33 +2,30 @@
   <a href="README.md">Русский</a> | <b>English</b> | <a href="README.de.md">Deutsch</a>
 </p>
 
-# Ka-Band (29 GHz) Aperture-Coupled Stacked Microstrip Patch Antenna with Circular Polarization
+# Broadband Ka-Band (28–30 GHz) Aperture-Coupled Stacked Microstrip Patch Antenna with Circular Polarization
 
-This repository contains the complete design workflow, analytical synthesis, CAD assets, and full-wave numerical electromagnetic analysis of a Ka-band circularly polarized microstrip patch antenna operating at a central frequency of 29.0 GHz. The antenna utilizes an aperture-coupled cross-slot feeding technique and a stacked parasitic patch architecture for impedance and axial ratio bandwidth enhancement.
+This repository contains the design, analytical synthesis, CAD assets, and full-wave numerical electromagnetic analysis of a broadband Ka-band circularly polarized microstrip patch antenna operating across 28.0–30.0 GHz. The antenna utilizes an aperture-coupled cross-slot feeding technique and a stacked parasitic patch architecture for wideband impedance and axial ratio performance.
 
 ## Table of Contents
 
-- [Overview](#overview)
-- [Project Structure](#project-structure)
-- [Analytical Calculation](#analytical-calculation)
-- [3D Modeling and Design Methodology](#3d-modeling-and-design-methodology)
-- [Numerical Simulation Results](#numerical-simulation-results)
-- [License](#license)
-
----
+[Overview](#overview)
+[Project Structure](#project-structure)
+[Analytical Calculation](#analytical-calculation)
+[3D Modeling and Design Methodology](#3d-modeling-and-design-methodology)
+[Numerical Simulation Results](#numerical-simulation-results)
+[License](#license)
 
 ## Overview
 
-The antenna is engineered for Ka-band applications (28.0–30.0 GHz), including mmWave satellite links, wireless front-ends, and radar transceivers. 
+The antenna is engineered for broadband Ka-band operations (28.0–30.0 GHz), including mmWave satellite links, wireless front-ends, and radar transceivers.
 
 Key design features:
-- **Topology**: Multilayer stacked microstrip patch antenna with parasitic resonance.
-- **Excitation**: Non-contact aperture electromagnetic coupling through a cross-slot in the ground plane fed by a microstrip line.
-- **Impedance Matching**: Centered open-circuited quarter-wave ($\lambda_g/4$) tuning stub positioned directly over the aperture cross to compensate for slot reactance.
-- **Circular Polarization**: Corner-truncated square patch geometry ($45^\circ$ chamfers) generating degenerate orthogonal modes ($TM_{10}$ and $TM_{01}$) in quadrature ($90^\circ$ phase shift).
-- **Bandwidth Expansion**: Upper parasitic radiating patch coupled electromagnetically to the driven patch, providing a dual-resonance frequency response.
 
----
+Topology: Multilayer stacked microstrip patch antenna with parasitic resonance.
+Excitation: Non-contact aperture electromagnetic coupling through a cross-slot in the ground plane fed by a microstrip line.
+Impedance Matching: Centered open-circuited quarter-wave ($\lambda_g/4$) tuning stub positioned directly over the aperture cross to compensate for slot reactance.
+Circular Polarization: Corner-truncated square patch geometry ($45^\circ$ chamfers) generating degenerate orthogonal modes ($TM_{10}$ and $TM_{01}$) in quadrature ($90^\circ$ phase shift).
+Bandwidth Expansion: Upper parasitic radiating patch coupled electromagnetically to the driven patch, providing a dual-resonance frequency response over the 28.0–30.0 GHz band.
 
 ## Project Structure
 
@@ -36,7 +33,6 @@ The project files are organized as follows:
 
 ```
 ├── .gitignore
-├── LICENSE
 ├── README.md
 ├── README.en.md
 ├── README.de.md
@@ -62,32 +58,31 @@ The project files are organized as follows:
     └── cp_stacked_patch_antenna_29ghz.cst    # Full-wave 3D electromagnetic model (CST Studio Suite)
 ```
 
----
-
 ## Analytical Calculation
 
 The initial analytical dimensioning was performed in Mathcad ([patch_antenna_analytical_calc.xmcd](calculations/patch_antenna_analytical_calc.xmcd)):
 
-1. **Substrate Properties**:
-   - Relative dielectric permittivity: $\varepsilon_r = 2.33$.
-   - Substrate thickness: $h = 0.254\text{ mm}$ ($10\text{ mil}$).
-   - Copper conductor thickness: $t = 35\ \mu\text{m}$ ($1\text{ oz Cu}$).
-   - Frequency specifications: $f_1 = 28.0\text{ GHz}$, $f_2 = 30.0\text{ GHz}$, center frequency $f_0 = 29.0\text{ GHz}$.
+### 1. Substrate Properties
+Relative dielectric permittivity: $\varepsilon_r = 2.33$.
+Substrate thickness: $h = 0.254\text{ mm}$ ($10\text{ mil}$).
+Copper conductor thickness: $t = 35\ \mu\text{m}$ ($1\text{ oz Cu}$).
+Frequency specifications: $f_1 = 28.0\text{ GHz}$, $f_2 = 30.0\text{ GHz}$, center frequency $f_0 = 29.0\text{ GHz}$.
 
-2. **Fundamental Patch Dimensions**:
-   - Theoretical width: $W = \frac{c}{2 f_0} \sqrt{\frac{2}{\varepsilon_r + 1}} \approx 4.01\text{ mm}$.
-   - Fringing field edge extension: $\Delta L \approx 0.129\text{ mm}$.
-   - Effective resonant length: $L_{\text{eff}} \approx 3.13\text{ mm}$.
+### 2. Fundamental Patch Dimensions
+Theoretical width:
+$$W = \frac{c}{2 f_0} \sqrt{\frac{2}{\varepsilon_r + 1}} \approx 4.01\text{ mm}$$
+Fringing field edge extension: $\Delta L \approx 0.129\text{ mm}$.
+Effective resonant length: $L_{\text{eff}} \approx 3.13\text{ mm}$.
 
-3. **Cross-Slot Aperture Geometry**:
-   - Slot width: $W_{\text{cross}} = 1.0\text{ mm}$.
-   - Resonant slot arm length: $L_{1\text{cross}} = L_{2\text{cross}} \approx 1.69\text{ mm}$ ($\approx \lambda_g / 4$).
+### 3. Cross-Slot Aperture Geometry
+Slot width: $W_{\text{cross}} = 1.0\text{ mm}$.
+Resonant slot arm length: $L_{1\text{cross}} = L_{2\text{cross}} \approx 1.69\text{ mm}$ ($\approx \lambda_g / 4$).
 
-4. **Microstrip Feed Line and Tuning Stub**:
-   - Quasistatic effective permittivity (Wheeler & Schneider model): $\varepsilon_{\text{eff},0} = 1.961$.
-   - High-frequency dispersion correction (Kobayashi model): $\varepsilon_{\text{eff}}(29\text{ GHz}) = 1.997$.
-   - Conductor thickness correction (Wheeler): $\Delta W_2 \approx 0.215\text{ mm}$.
-   - Quarter-wave open stub: stub length $L_t = \lambda_g / 4 \approx 1.83\text{ mm}$, guided wavelength $\lambda_g \approx 7.32\text{ mm}$, trace width $W_t \approx 0.54\text{ mm}$ for $Z_0 = 50\ \Omega$.
+### 4. Microstrip Feed Line and Tuning Stub
+Quasistatic effective permittivity (Wheeler & Schneider model): $\varepsilon_{\text{eff},0} = 1.961$.
+High-frequency dispersion correction (Kobayashi model): $\varepsilon_{\text{eff}}(29\text{ GHz}) = 1.997$.
+Conductor thickness correction (Wheeler): $\Delta W_2 \approx 0.215\text{ mm}$.
+Quarter-wave open stub: stub length $L_t = \lambda_g / 4 \approx 1.83\text{ mm}$, guided wavelength $\lambda_g \approx 7.32\text{ mm}$, trace width $W_t \approx 0.54\text{ mm}$ for $Z_0 = 50\ \Omega$.
 
 <p align="center">
   <img src="docs/images/patch_truncation_geometry.png" width="500" alt="Resonator and Truncation Geometry">
@@ -95,35 +90,32 @@ The initial analytical dimensioning was performed in Mathcad ([patch_antenna_ana
   <em>Figure 1. Layout of the square patch radiator: patch width 2.65 mm, corner truncation size 0.35 mm.</em>
 </p>
 
----
-
 ## 3D Modeling and Design Methodology
 
 Electromagnetic modeling and parameter optimization were performed in CST Studio Suite ([cp_stacked_patch_antenna_29ghz.cst](simulation/cp_stacked_patch_antenna_29ghz.cst)). The evolutionary design process proceeded through the following systematic phases:
 
-1. **Initial Single-Patch Baseline**:
-   - Synthesized the microstrip feed line terminated with an open-circuited quarter-wave stub centered symmetrically over the cross-slot aperture in the ground plane.
-2. **VSWR Tuning**:
-   - Parametrically adjusted the primary radiator dimensions to tune the input resonance to 29.0 GHz.
-3. **Circular Polarization Generation**:
-   - Introduced diagonal corner truncations of dimension $\Delta c = 0.35\text{ mm}$ on the square patch ($2.65\text{ mm} \times 2.65\text{ mm}$). This geometrical perturbation couples the orthogonal modes with equal magnitudes and a $90^\circ$ relative phase difference.
-4. **Bandwidth Broadening via Stacked Parasitic Patch**:
-   - Introduced a second dielectric layer supporting a parasitic microstrip element above the driven patch. The coupled multi-resonant system expands the impedance bandwidth ($S_{11} < -10\text{ dB}$) and the 3 dB Axial Ratio bandwidth.
-5. **Enclosure and Connector Integration**:
-   - Integrated an End-Launch SMA RF connector model and a protective structural enclosure (base and radome cover).
+### 1. Initial Single-Patch Baseline
+Synthesized the microstrip feed line terminated with an open-circuited quarter-wave stub centered symmetrically over the cross-slot aperture in the ground plane to compensate for slot reactance.
+
+### 2. VSWR Tuning
+Parametrically adjusted the primary radiator dimensions to ensure optimal impedance match across the operational frequency band.
+
+### 3. Circular Polarization Generation
+Introduced diagonal corner truncations of dimension $\Delta c = 0.35\text{ mm}$ on the square patch ($2.65\text{ mm} \times 2.65\text{ mm}$). This geometrical perturbation couples the orthogonal modes with equal magnitudes and a $90^\circ$ relative phase difference.
+
+### 4. Bandwidth Broadening via Stacked Parasitic Patch
+Introduced a second dielectric layer supporting a parasitic microstrip element above the driven patch. The coupled multi-resonant system expands the impedance bandwidth ($S_{11} < -10\text{ dB}$) and the 3 dB Axial Ratio bandwidth across the 28.0–30.0 GHz band.
 
 <p align="center">
   <img src="docs/images/axial_ratio_3d_pattern_29ghz.png" width="650" alt="3D CST Antenna Model and Axial Ratio Pattern">
   <br>
-  <em>Figure 2. 3D CST assembly model and spatial Axial Ratio radiation distribution at 29 GHz.</em>
+  <em>Figure 2. 3D CST antenna model and spatial Axial Ratio radiation distribution.</em>
 </p>
-
----
 
 ## Numerical Simulation Results
 
 ### 1. Reflection Coefficient ($S_{11}$)
-At the design frequency of 29.0 GHz, the return loss is $S_{11} = -13.24\text{ dB}$. A deep resonance minimum reaches $-28.0\text{ dB}$ at 28.5 GHz. The operational $-10\text{ dB}$ impedance bandwidth spans from 27.2 GHz to 29.8 GHz (absolute bandwidth of 2.6 GHz, fractional bandwidth $\approx 9.0\%$).
+Across the broadband range of 28.0–30.0 GHz, the antenna maintains strong return loss. At 29.0 GHz, the return loss is $S_{11} = -13.24\text{ dB}$. A deep resonance minimum reaches $-28.0\text{ dB}$ at 28.5 GHz. The operational $-10\text{ dB}$ impedance bandwidth spans from 27.2 GHz to 29.8 GHz (absolute bandwidth of 2.6 GHz, fractional bandwidth $\approx 9.0\%$).
 
 <p align="center">
   <img src="docs/images/simulation_s_parameters_s11.png" width="700" alt="S-Parameters S11">
@@ -157,8 +149,6 @@ In the broadside direction ($\theta = 0^\circ$) at 29.0 GHz, the axial ratio is 
   <br>
   <em>Figure 6. Farfield Axial Ratio polar cut (Phi=90°) at 29 GHz.</em>
 </p>
-
----
 
 ## License
 
